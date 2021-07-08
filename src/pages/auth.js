@@ -5,19 +5,14 @@ import {
   FormControl,
   TextField,
   Button,
-  Backdrop,
-  Snackbar,
-  CircularProgress,
 } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+import UIres from '../components/uiResponces'
 import { BiUserCircle } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useStyles from "../UI-Styles/auth";
-import Portal from "../components/portal";
 import { authThunkhandler } from "../store/thunks/auth";
-import { uiActions } from "../store/reducers/uiSlice";
 
 const Auth = (props) => {
   const classes = useStyles();
@@ -26,8 +21,6 @@ const Auth = (props) => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [valid, setValid] = useState(true);
-  const [snackbar, setSnackbar] = useState(false);
-  const ui = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -144,61 +137,7 @@ const Auth = (props) => {
           </p>
         </FormControl>
       </div>
-      <Portal>
-        <Backdrop
-          onClick={() => {
-            setSnackbar(true);
-          }}
-          className={classes.backdrop}
-          open={ui.drop}
-        >
-          <CircularProgress color="primary" />
-          <Snackbar
-            open={snackbar}
-            autoHideDuration={3000}
-            onClose={() => {
-              setSnackbar(false);
-            }}
-          >
-            <Alert
-              onClose={() => {
-                setSnackbar(false);
-              }}
-              severity="info"
-            >
-              Please wait while we login!
-            </Alert>
-          </Snackbar>
-        </Backdrop>
-        <Snackbar
-          open={ui.notification.show}
-          autoHideDuration={5000}
-          onClose={(e) =>
-            dispatch(
-              uiActions.sendNotification({
-                text: "",
-                severity: "info",
-                show: false,
-              })
-            )
-          }
-        >
-          <Alert
-            onClose={(e) =>
-              dispatch(
-                uiActions.sendNotification({
-                  text: "",
-                  severity: "info",
-                  show: false,
-                })
-              )
-            }
-            severity={ui.notification.severity}
-          >
-            {ui.notification.text}
-          </Alert>
-        </Snackbar>
-      </Portal>
+      <UIres/>
     </div>
   );
 };
