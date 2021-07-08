@@ -11,10 +11,16 @@ const useStyles = makeStyles(theme => ({
         width:'100%',
         borderRadius:'8px',
         boxShadow:'2px 2px 4px grey',
-        padding:'16px 8px'
+        padding:'16px 8px',
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between'
     },
     headText:{
         width:'80%',
+    },
+    blocks:{
+
     }
 }));
 

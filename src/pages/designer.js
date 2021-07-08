@@ -36,6 +36,12 @@ const Designer = (props) => {
     };
   }, [title, desc, dispatch]);
 
+  useEffect(()=>{
+    if(sec >= form.section.length){
+      setSec(form.section.length - 1);
+    }
+  },[sec,form.section.length])
+
   return (
     <div>
       <AppBar position="static" className={classes.appbar}>
@@ -101,7 +107,7 @@ const Designer = (props) => {
         )}
       </div>
       <div className={classes.form}>
-        <Section key={sec} sec={sec} />
+        {(sec<form.section.length) && <Section key={sec} sec={sec} />}
       </div>
     </div>
   );
