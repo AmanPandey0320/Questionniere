@@ -13,7 +13,7 @@ import Alert from "@material-ui/lab/Alert";
 import { BiUserCircle } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import useStyles from "../UI-Styles/auth";
 import Portal from "../components/portal";
 import { authThunkhandler } from "../store/thunks/auth";
@@ -56,15 +56,17 @@ const Auth = (props) => {
   }, [password]);
 
   useEffect(() => {
-    if (confirm === password) {
-      document.getElementById("confirm-error").innerHTML = "";
-      setValid(true);
-    } else {
-      document.getElementById("confirm-error").innerHTML =
-        "** password does not match";
-      setValid(false);
+    if (signup) {
+      if (confirm === password) {
+        document.getElementById("confirm-error").innerHTML = "";
+        setValid(true);
+      } else {
+        document.getElementById("confirm-error").innerHTML =
+          "** password does not match";
+        setValid(false);
+      }
     }
-  }, [confirm, password]);
+  }, [confirm, password,signup]);
 
   return (
     <div className={classes.root}>
@@ -109,7 +111,9 @@ const Auth = (props) => {
           <Button
             variant="outlined"
             color="primary"
-            onClick={(e) => dispatch(authThunkhandler(email, password, signup,history))}
+            onClick={(e) =>
+              dispatch(authThunkhandler(email, password, signup, history))
+            }
             className={`${classes.formElement}`}
             disabled={!valid}
           >

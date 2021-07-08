@@ -3,7 +3,7 @@ import { uiActions } from "../reducers/uiSlice";
 import { authActions } from "../reducers/authSlice";
 import store from "../rootReducer";
 
-export const authThunkhandler = (email, password, signup) => {
+export const authThunkhandler = (email, password, signup,history) => {
   return (dispatch) => {
     dispatch(uiActions.toggleDrop());
 
@@ -27,13 +27,14 @@ export const authThunkhandler = (email, password, signup) => {
               uid: user.uid,
             })
           );
+          history.replace('/home');
         })
         .catch((err) => {
           store.dispatch(uiActions.toggleDrop());
           store.dispatch(
             uiActions.sendNotification({
               text: err.message,
-              severity: "success",
+              severity: "error",
               show: true,
             })
           );
@@ -58,13 +59,14 @@ export const authThunkhandler = (email, password, signup) => {
               show: true,
             })
           );
+          history.replace('/home');
         })
         .catch((err) => {
           dispatch(uiActions.toggleDrop());
           dispatch(
             uiActions.sendNotification({
               text: err.message,
-              severity: "success",
+              severity: "error",
               show: true,
             })
           );
