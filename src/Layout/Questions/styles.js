@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom:theme.spacing(1),
     },
     addOP:{
-        width:'50%'
+        width:'40%'
     }
 }));
 export default useStyles;

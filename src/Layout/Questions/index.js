@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { queActions } from "../../store/reducers/queSlice";
 import { optionActions } from "../../store/reducers/optionSlice";
+import OptionC from "./elements/optionC";
+import OptionR from "./elements/optionR";
 import useStyles from "./styles";
 import {
   TextField,
@@ -13,10 +15,13 @@ import {
   Checkbox,
   Switch,
   Button,
+  RadioGroup,
 } from "@material-ui/core";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { useEffect, useState } from "react";
+
 const Question = (props) => {
+
   const { code, index } = props;
   const [question] = useSelector((state) =>
     state.question.data.filter((que) => que.code === code)
@@ -32,6 +37,7 @@ const Question = (props) => {
   const [negmarks, setNegmarks] = useState(0);
   const [showMarks, setShowMarks] = useState(Boolean(question.show_marks));
   const [require, setRequire] = useState(Boolean(question.require));
+  const [radio,setRadio] = useState(0)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -55,6 +61,17 @@ const Question = (props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      dispatch(optionActions.setSingleCorrect({que_id:question.id,code:radio}))
+    },1000);
+
+    return () => {
+      clearTimeout(timer);
+    }
+
+  },[radio,dispatch,question.id]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
       dispatch(
         queActions.editQuestion({
           code,
@@ -71,7 +88,7 @@ const Question = (props) => {
     };
   }, [code, marks, negmarks, showMarks, require, dispatch]);
 
-  console.log(options);
+  console.log(radio);
 
   return (
     <div className={classes.root}>
@@ -115,6 +132,9 @@ const Question = (props) => {
       />
       {input === 3 && (
         <div className={classes.options}>
+          {options.map((option) => {
+            return <OptionC key={option.code} code={option.code} />;
+          })}
           <Button
             className={classes.addOP}
             onClick={(e) =>
@@ -127,7 +147,6 @@ const Question = (props) => {
                 })
               )
             }
-            variant="outlined"
             color="primary"
           >
             <MdAdd />
@@ -135,7 +154,32 @@ const Question = (props) => {
           </Button>
         </div>
       )}
-      {input === 2 && <div className={classes.options}></div>}
+      {input === 2 && (
+        <div className={classes.options}>
+          <RadioGroup onChange={e => setRadio(e.target.value)} value={radio} name={` RAD_${code}`} >
+            {options.map((option) => {
+              return <OptionR key={option.code} code={option.code} />;
+            })}
+          </RadioGroup>
+          <Button
+            className={classes.addOP}
+            onClick={(e) =>
+              dispatch(
+                optionActions.addOptions({
+                  qnr_id: question.qnr_id,
+                  sec_id: question.sec_id,
+                  blk_id: question.blk_id,
+                  que_id: question.id,
+                })
+              )
+            }
+            color="primary"
+          >
+            <MdAdd />
+            &nbsp;Add option
+          </Button>
+        </div>
+      )}
       <div className={classes.setting}>
         <TextField
           value={marks}

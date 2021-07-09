@@ -53,7 +53,6 @@ export const initForm = (history) => {
 export const submitFrom = () => {
   const state = store.getState();
   let { block, form, option, question } = state;
-  const qnr_id = form.id;
   question.data.forEach((que) => {
     const options = option.data.filter((op) => op.que_id === que.id);
     store.dispatch(queActions.editQuestion({ options, code: que.code }));

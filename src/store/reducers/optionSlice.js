@@ -17,6 +17,29 @@ const optionSlice = createSlice({
       state.count = id;
       state.data.push(option);
     },
+    deleteOption(state, action) {
+      const { code } = action.payload;
+      state.data = state.data.filter((op) => op.code !== code);
+    },
+    editOption(state, action) {
+      const { code, text, isTrue } = action.payload;
+      state.data = state.data.map((op) => {
+        if (op.code === code) {
+          op.text = text || op.text;
+          op.isTrue = isTrue || op.isTrue;
+        }
+        return op;
+      });
+    },
+    setSingleCorrect(state,action){
+      const { code,que_id } = action.payload
+      state.data = state.data.map(op => {
+        if(op.que_id === que_id){
+          op.isTrue = op.code === code;
+        }
+        return op;
+      })
+    }
   },
 });
 
