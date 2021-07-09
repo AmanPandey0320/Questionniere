@@ -14,10 +14,12 @@ import { formActions } from "../store/reducers/formSlice";
 import { useEffect, useState } from "react";
 import Section from "../Layout/Section/section";
 import { submitFrom } from "../store/thunks/formThunk";
+import { useHistory } from "react-router";
 
 const Designer = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const form = useSelector((state) => state.form);
   const [title, setTitle] = useState(form.title);
   const [desc, setDesc] = useState(form.desc);
@@ -69,7 +71,7 @@ const Designer = (props) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Send settings">
-            <IconButton onClick={(e) => submitFrom()}>
+            <IconButton onClick={(e) => dispatch(submitFrom(history))}>
               <MdSend color="#3f50b5" size="1.25em" />
             </IconButton>
           </Tooltip>

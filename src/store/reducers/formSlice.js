@@ -11,6 +11,8 @@ const formSlice = createSlice({
     active: 1,
     bg_color: "#ffffff",
     section_count: 0,
+    created_at:undefined,
+    last_edited:undefined,
     section: [],
   },
   reducers: {
@@ -22,6 +24,8 @@ const formSlice = createSlice({
       state.type = action.payload.type || state.type;
       state.active = action.payload.action || state.active;
       state.bg_color = action.payload.bg_color || state.bg_color;
+      state.last_edited = Date.now();
+      state.created_at = state.created_at || Date.now();
     },
     addNewSection(state, action) {
       if (state.section.length === 0) {
