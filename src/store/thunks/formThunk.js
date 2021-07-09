@@ -9,40 +9,46 @@ export const initForm = (history) => {
   return (dispatch) => {
     dispatch(uiActions.toggleDrop());
     const db = firebase.firestore();
+    // db.collection("forms")
+    //   .get()
+    //   .then((querySnapshot) => {
+    //     let len = 0;
+    //     querySnapshot.forEach((doc) => len++);
+    //     const id = len;
+    //     const code = `QNR_${id}`;
+
+    //     const form = store.getState().form;
+    //     console.log(form);
+
+    //   })
+    //   .catch((err) => {
+    //     dispatch(uiActions.toggleDrop());
+    //     dispatch(
+    //       uiActions.sendNotification({
+    //         severity: "error",
+    //         text: "Unable to initialize form!!!",
+    //         show: true,
+    //       })
+    //     );
+    //   });
     db.collection("forms")
-      .get()
-      .then((querySnapshot) => {
-        let len = 0;
-        querySnapshot.forEach((doc) => len++);
-        const id = len;
-        const code = `QNR_${id}`;
+      .add({})
+      .then((res) => {
+        const id = res.id;
+        const code = id;
         dispatch(formActions.editFormData({ id, code }));
         dispatch(formActions.addNewSection());
-        const form = store.getState().form;
-        console.log(form);
-        db.collection("forms")
-          .add(form)
-          .then((res) => {
-            dispatch(uiActions.toggleDrop());
-            history.push(`/form/${code}`);
-          })
-          .catch((err) => {
-            dispatch(uiActions.toggleDrop());
-            dispatch(
-              uiActions.sendNotification({
-                severity: "error",
-                text: "Unable to initialize form!!!",
-                show: true,
-              })
-            );
-          });
+        dispatch(uiActions.toggleDrop());
+        // const form = store.getState().form;
+        // console.log(form);
+        history.push(`/form/${code}`);
       })
       .catch((err) => {
         dispatch(uiActions.toggleDrop());
         dispatch(
           uiActions.sendNotification({
             severity: "error",
-            text: "Unable to initialize form!!!",
+            text: err.message,
             show: true,
           })
         );
@@ -55,7 +61,11 @@ export const submitFrom = () => {
   let { block, form, option, question } = state;
   question.data.forEach((que) => {
     const options = option.data.filter((op) => op.que_id === que.id);
-    store.dispatch(queActions.editQuestion({ options, code: que.code }));
+    if(((que.input_type === 2 || que.input_type === 3) && options.length === 0 ) || que.valid === false){
+      store.dispatch(queActions.deleteQuestion({code:que.code}));
+    }else{
+      store.dispatch(queActions.editQuestion({ options, code: que.code }));
+    }
   });
   question = store.getState().question;
 
@@ -65,10 +75,12 @@ export const submitFrom = () => {
   });
   block = store.getState().block;
 
-  form.section.forEach(sec => {
-      const currBlock = block.data.filter(block => block.sec_id === sec.id)
-      store.dispatch(formActions.editSection({code:sec.code,blocks:currBlock}));
-  })
+  form.section.forEach((sec) => {
+    const currBlock = block.data.filter((block) => block.sec_id === sec.id);
+    store.dispatch(
+      formActions.editSection({ code: sec.code, blocks: currBlock })
+    );
+  });
   form = store.getState().form;
 
   console.log(form);

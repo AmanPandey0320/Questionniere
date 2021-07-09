@@ -50,20 +50,18 @@ const Option = (props) => {
           />
         }
         label={
-          <span>
-            <TextField
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              className={classes.textfield}
-            />
-            <IconButton
-              onClick={(e) => dispatch(optionActions.deleteOption({ code }))}
-            >
-              <MdCancel />
-            </IconButton>
-          </span>
+          <TextField
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className={classes.textfield}
+          />
         }
       />
+      <IconButton
+        onClick={(e) => dispatch(optionActions.deleteOption({ code }))}
+      >
+        <MdCancel />
+      </IconButton>
     </div>
   );
 };

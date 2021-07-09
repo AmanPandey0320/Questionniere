@@ -32,7 +32,7 @@ const Question = (props) => {
   const [que, setQue] = useState(question.question);
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [input, setInput] = useState(0);
+  const [input, setInput] = useState(question.input_type);
   const [marks, setMarks] = useState(0);
   const [negmarks, setNegmarks] = useState(0);
   const [showMarks, setShowMarks] = useState(Boolean(question.show_marks));
@@ -41,7 +41,8 @@ const Question = (props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(queActions.editQuestion({ code, que }));
+      const valid = Boolean(que.trim());
+      dispatch(queActions.editQuestion({ code, que, valid }));
     }, 1000);
 
     return () => {
@@ -87,8 +88,6 @@ const Question = (props) => {
       clearTimeout(timer);
     };
   }, [code, marks, negmarks, showMarks, require, dispatch]);
-
-  console.log(radio);
 
   return (
     <div className={classes.root}>

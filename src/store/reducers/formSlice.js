@@ -5,7 +5,7 @@ const formSlice = createSlice({
   initialState: {
     id: null,
     code: null,
-    desc: null,
+    desc: '',
     title: "Untitled questioniere",
     type: 1,
     active: 1,

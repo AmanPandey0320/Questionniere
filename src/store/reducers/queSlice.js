@@ -18,7 +18,7 @@ const questionSlice = createSlice({
         blk_id,
         code,
         active: 1,
-        input_type: 1,
+        input_type: 0,
         options: [],
         shuffle: 0,
         marks: 0,
@@ -26,6 +26,7 @@ const questionSlice = createSlice({
         negative: 0,
         require: 0,
         question: "This is a question",
+        valid:true,
       };
       state.count = id;
       state.data.push(question);
@@ -44,6 +45,7 @@ const questionSlice = createSlice({
         marks,
         require,
         options,
+        valid,
         id,
       } = action.payload;
       state.data.map((question) => {
@@ -55,6 +57,9 @@ const questionSlice = createSlice({
           question.negative = negative || question.negative;
           question.require = require || question.require;
           question.options = options || question.options;
+          if(valid !== undefined){
+            question.valid = valid;
+          }
         }
         return question;
       });
