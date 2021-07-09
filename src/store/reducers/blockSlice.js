@@ -39,6 +39,10 @@ const blockSlice = createSlice({
       })
       state.data = data;
     },
+    clearBlocks(state,action){
+      state.count = 0;
+      state.data = [];
+    }
   },
 });
 

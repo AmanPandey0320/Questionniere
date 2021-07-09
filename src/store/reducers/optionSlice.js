@@ -31,15 +31,19 @@ const optionSlice = createSlice({
         return op;
       });
     },
-    setSingleCorrect(state,action){
-      const { code,que_id } = action.payload
-      state.data = state.data.map(op => {
-        if(op.que_id === que_id){
+    setSingleCorrect(state, action) {
+      const { code, que_id } = action.payload;
+      state.data = state.data.map((op) => {
+        if (op.que_id === que_id) {
           op.isTrue = op.code === code;
         }
         return op;
-      })
-    }
+      });
+    },
+    clearOption(state, option) {
+      state.count = 0;
+      state.data = [];
+    },
   },
 });
 

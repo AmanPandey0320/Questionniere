@@ -3,6 +3,7 @@ import { uiActions } from "../reducers/uiSlice";
 import { formActions } from "../reducers/formSlice";
 import { queActions } from "../reducers/queSlice";
 import { blockActions } from "../reducers/blockSlice";
+import { optionActions } from "../reducers/optionSlice";
 import store from "../rootReducer";
 
 const db = firebase.firestore();
@@ -11,28 +12,13 @@ export const initForm = (history) => {
   return (dispatch) => {
     dispatch(uiActions.toggleDrop());
 
-    // db.collection("forms")
-    //   .get()
-    //   .then((querySnapshot) => {
-    //     let len = 0;
-    //     querySnapshot.forEach((doc) => len++);
-    //     const id = len;
-    //     const code = `QNR_${id}`;
+    dispatch(formActions.clearForm());
+    dispatch(blockActions.clearBlocks());
+    dispatch(queActions.clearQuestion());
+    dispatch(optionActions.clearOption());
 
-    //     const form = store.getState().form;
-    //     console.log(form);
-
-    //   })
-    //   .catch((err) => {
-    //     dispatch(uiActions.toggleDrop());
-    //     dispatch(
-    //       uiActions.sendNotification({
-    //         severity: "error",
-    //         text: "Unable to initialize form!!!",
-    //         show: true,
-    //       })
-    //     );
-    //   });
+    console.log(store.getState());
+    
     db.collection("forms")
       .add({})
       .then((res) => {
@@ -41,8 +27,8 @@ export const initForm = (history) => {
         dispatch(formActions.editFormData({ id, code }));
         dispatch(formActions.addNewSection());
         dispatch(uiActions.toggleDrop());
-        // const form = store.getState().form;
-        // console.log(form);
+        const form = store.getState().form;
+        console.log(form);
         history.push(`/form/${code}`);
       })
       .catch((err) => {
@@ -99,6 +85,8 @@ export const submitFrom = (history) => {
       }
     });
     form = store.getState().form;
+
+    console.log(form)
 
     const id = form.id;
 

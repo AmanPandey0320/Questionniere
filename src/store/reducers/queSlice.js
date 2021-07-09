@@ -26,7 +26,7 @@ const questionSlice = createSlice({
         negative: 0,
         require: 0,
         question: "This is a question",
-        valid:true,
+        valid: true,
       };
       state.count = id;
       state.data.push(question);
@@ -57,12 +57,16 @@ const questionSlice = createSlice({
           question.negative = negative || question.negative;
           question.require = require || question.require;
           question.options = options || question.options;
-          if(valid !== undefined){
+          if (valid !== undefined) {
             question.valid = valid;
           }
         }
         return question;
       });
+    },
+    clearQuestion(state, action) {
+      state.count = 0;
+      state.data = [];ed
     },
   },
 });

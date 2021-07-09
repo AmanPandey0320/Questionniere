@@ -46,6 +46,7 @@ const formSlice = createSlice({
         block_count: 0,
         blocks: [],
       };
+      state.section = state.section.filter(sec => sec.qnr_id !== state.id)
       state.section_count = id;
       state.section.push(section);
     },
@@ -58,6 +59,7 @@ const formSlice = createSlice({
         }
         return sec;
       });
+      
       state.section = section;
     },
     deleteSection(state, action) {
@@ -65,6 +67,12 @@ const formSlice = createSlice({
       const section = state.section.filter((sec) => sec.code !== code);
       state.section = section;
     },
+    clearForm(state,action){
+      state.id = null;
+      state.code = null;
+      state.section = [];
+      state.section_count=0;
+    }
   },
 });
 
