@@ -9,9 +9,11 @@ const useStyles = makeStyles(theme => ({
         borderRadius:'4px',
         display:'flex',
         flexDirection:'column',
+        transition:'scale 0.3s',
         '&:hover':{
             cursor:'pointer',
-            scale:'1.03'
+            scale:'1.03',
+            transition:'scale 0.3s'
         },
     },
     head:{
@@ -21,6 +23,12 @@ const useStyles = makeStyles(theme => ({
     },
     headText:{
         width:'75%'
+    },
+    questions:{
+        display:'flex',
+        flexDirection:'column',
+        width:'90%',
+        margin:'auto'
     }
 }));
 

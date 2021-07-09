@@ -15,7 +15,7 @@ export const initForm = (history) => {
             dispatch(formActions.editFormData({id,code}));
             dispatch(formActions.addNewSection());
             const form = store.getState().form;
-
+            console.log(form)
             db.collection("forms").add(form).then(res => {
                 dispatch(uiActions.toggleDrop());
                 history.push(`/form/${code}`);
