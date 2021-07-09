@@ -46,10 +46,11 @@ const formSlice = createSlice({
       state.section.push(section);
     },
     editSection(state, action) {
-      const { code, title } = action.payload;
+      const { code, title,blocks } = action.payload;
       const section = state.section.map((sec) => {
         if (sec.code === code) {
-          sec.title = title;
+          sec.title = title || sec.title;
+          sec.blocks = blocks || sec.blocks;
         }
         return sec;
       });

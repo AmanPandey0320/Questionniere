@@ -29,10 +29,11 @@ const blockSlice = createSlice({
       state.data = state.data.filter((block) => block.code !== code);
     },
     editBlock(state, action) {
-      const { code, desc } = action.payload;
+      const { code, desc,children } = action.payload;
       const data = state.data.map(block => {
           if(block.code === code){
-              block.desc = desc;
+              block.desc = desc || block.desc;
+              block.children = children || block.children;
           }
           return block;
       })

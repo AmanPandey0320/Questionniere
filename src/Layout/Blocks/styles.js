@@ -9,11 +9,8 @@ const useStyles = makeStyles(theme => ({
         borderRadius:'4px',
         display:'flex',
         flexDirection:'column',
-        transition:'scale 0.3s',
         '&:hover':{
             cursor:'pointer',
-            scale:'1.03',
-            transition:'scale 0.3s'
         },
     },
     head:{

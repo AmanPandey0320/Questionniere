@@ -19,7 +19,7 @@ const Block = (props) => {
   const [desc, setDesc] = useState(block.desc);
   const dispatch = useDispatch();
 
-  console.log(block);
+  // console.log(block);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -47,9 +47,9 @@ const Block = (props) => {
         </IconButton>
       </div>
       <div className = {classes.questions} >
-        {questions.map(question => {
+        {questions.map((question,index) => {
           return(
-            <Question key = {question.code} code={question.code}/>
+            <Question key = {question.code} index={index} code={question.code}/>
           )
         })}
       </div>

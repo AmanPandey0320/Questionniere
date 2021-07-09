@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { formActions } from "../store/reducers/formSlice";
 import { useEffect, useState } from "react";
 import Section from "../Layout/Section/section";
+import { submitFrom } from "../store/thunks/formThunk";
 
 const Designer = (props) => {
   const classes = useStyles();
@@ -36,11 +37,11 @@ const Designer = (props) => {
     };
   }, [title, desc, dispatch]);
 
-  useEffect(()=>{
-    if(sec >= form.section.length){
+  useEffect(() => {
+    if (sec >= form.section.length) {
       setSec(form.section.length - 1);
     }
-  },[sec,form.section.length])
+  }, [sec, form.section.length]);
 
   return (
     <div>
@@ -68,7 +69,7 @@ const Designer = (props) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Send settings">
-            <IconButton>
+            <IconButton onClick={(e) => submitFrom()}>
               <MdSend color="#3f50b5" size="1.25em" />
             </IconButton>
           </Tooltip>
@@ -77,16 +78,20 @@ const Designer = (props) => {
       <div className={classes.toggler}>
         <span>
           <Tooltip title="Previous section">
-            <IconButton onClick={e=>{sec!==0?setSec(pre => pre-1):setSec(sec)}} >
+            <IconButton
+              onClick={(e) => {
+                sec !== 0 ? setSec((pre) => pre - 1) : setSec(sec);
+              }}
+            >
               <MdArrowBack color="#3f50b5" />
             </IconButton>
           </Tooltip>
         </span>
-        <div className={classes.togglerText}>Section {sec+1}</div>
+        <div className={classes.togglerText}>Section {sec + 1}</div>
         {sec + 1 < form.section.length ? (
           <span>
             <Tooltip title="Next section">
-              <IconButton onClick={e => setSec(pre => pre+1)} >
+              <IconButton onClick={(e) => setSec((pre) => pre + 1)}>
                 <MdArrowForward color="#3f50b5" />
               </IconButton>
             </Tooltip>
@@ -97,7 +102,7 @@ const Designer = (props) => {
               <IconButton
                 onClick={(e) => {
                   dispatch(formActions.addNewSection());
-                  setSec(pre => pre+1);
+                  setSec((pre) => pre + 1);
                 }}
               >
                 <MdAdd color="#3f50b5" />
@@ -107,8 +112,10 @@ const Designer = (props) => {
         )}
       </div>
       <div className={classes.form}>
-        {(sec<form.section.length) && <Section key={sec} sec={sec} />}
+        {sec < form.section.length && <Section key={sec} sec={sec} />}
       </div>
+      <br />
+      <br />
     </div>
   );
 };

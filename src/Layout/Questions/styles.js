@@ -30,6 +30,28 @@ const useStyles = makeStyles(theme => ({
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between'
+    },
+    setting:{
+        marginInline:theme.spacing(2),
+        marginTop:'6px',
+        width:'96%',
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-evenly'
+    },
+    marks:{
+        width:'96px'
+    },
+    options:{
+        width:'92%',
+        margin:'auto',
+        display:'flex',
+        flexDirection:'column',
+        marginTop:theme.spacing(1),
+        marginBottom:theme.spacing(1),
+    },
+    addOP:{
+        width:'50%'
     }
 }));
 export default useStyles;

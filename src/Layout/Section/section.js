@@ -39,7 +39,7 @@ const Section = (props) => {
     };
   }, [title, dispatch, section.code]);
 
-  console.log(section);
+  // console.log(section);
   
   return (
     <div className={classes.root}>
