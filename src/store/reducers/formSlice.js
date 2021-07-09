@@ -60,32 +60,6 @@ const formSlice = createSlice({
       const section = state.section.filter((sec) => sec.code !== code);
       state.section = section;
     },
-    addBlock(state, action) {
-      const { idx } = action.payload;
-      const id = state.section[idx].block_count + 1;
-      const code = `BLK_${id}`;
-      const que_cnt = 0;
-      const qnr_id = state.id;
-      const sec_id = state.section[idx].id;
-      const block = {
-        id,
-        code,
-        que_cnt,
-        qnr_id,
-        sec_id,
-        active: 1,
-        shuffle: 0,
-        desc: "This is a block description",
-        children: [],
-      };
-      state.section[idx].block_count = id;
-      state.section[idx].blocks.push(block);
-    },
-    editBlock(state, action) {
-      const { blk, idx, desc } = action.payload;
-      const curr_block = state.section[idx].blocks[blk];
-      state.section[idx].blocks[blk] = { ...curr_block, desc };
-    },
   },
 });
 

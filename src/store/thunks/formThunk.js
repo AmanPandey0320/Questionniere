@@ -14,7 +14,6 @@ export const initForm = (history) => {
             const code = `QNR_${id}`;
             dispatch(formActions.editFormData({id,code}));
             dispatch(formActions.addNewSection());
-            dispatch(formActions.addBlock({idx:0}))
             const form = store.getState().form;
 
             db.collection("forms").add(form).then(res => {

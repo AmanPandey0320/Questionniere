@@ -10,11 +10,17 @@ import Portal from "../../components/portal";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../../store/reducers/formSlice";
+import { blockActions } from "../../store/reducers/blockSlice";
 import { BiGridVertical } from "react-icons/bi";
 import Block from "../Blocks/block";
 const Section = (props) => {
   const classes = useStyles();
   const section = useSelector((state) => state.form.section[props.sec]);
+  const blocks = useSelector((state) =>
+    state.block.data.filter(
+      (block) => block.sec_id === section.id && block.qnr_id === section.qnr_id
+    )
+  );
   const dispatch = useDispatch();
   const [title, setTitle] = useState(section.title);
   const [anchor, setAnchor] = useState(null);
@@ -32,7 +38,9 @@ const Section = (props) => {
       clearTimeout(timer);
     };
   }, [title, dispatch, section.code]);
-  console.log(section);
+
+  // console.log(blocks);
+  
   return (
     <div className={classes.root}>
       <span>Section</span>
@@ -49,8 +57,8 @@ const Section = (props) => {
         </IconButton>
       </div>
       <div className={classes.blocks}>
-        {section.blocks.map((block, index) => {
-          return <Block key={block.code} data={block} />;
+        {blocks.map((block, index) => {
+          return <Block key={block.code} code={block.code} />;
         })}
       </div>
       <Portal>
@@ -72,7 +80,12 @@ const Section = (props) => {
           </MenuItem>
           <MenuItem
             onClick={(e) => {
-              dispatch(formActions.addBlock({ idx: props.sec }));
+              dispatch(
+                blockActions.addBlock({
+                  qnr_id: section.qnr_id,
+                  sec_id: section.id,
+                })
+              );
               setAnchor(null);
             }}
           >
