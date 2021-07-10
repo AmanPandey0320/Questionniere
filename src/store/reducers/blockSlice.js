@@ -30,11 +30,14 @@ const blockSlice = createSlice({
       state.data = state.data.filter((block) => block.code !== code);
     },
     editBlock(state, action) {
-      const { code, desc,children,color,sec_id } = action.payload;
+      const { code, desc,children,color,sec_id,shuffle } = action.payload;
       const data = state.data.map(block => {
           if(block.code === code){
               block.desc = desc || block.desc;
               block.children = children || block.children;
+              if(shuffle !== undefined){
+                block.shuffle = shuffle;
+              }
           }
           if(block.sec_id === sec_id){
             block.color = color || block.color;

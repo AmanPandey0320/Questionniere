@@ -1,5 +1,13 @@
 import useStyles from "./styles";
-import { TextField, IconButton, Menu, MenuItem } from "@material-ui/core";
+import {
+  TextField,
+  IconButton,
+  Menu,
+  MenuItem,
+  FormControlLabel,
+  Checkbox,
+  Divider,
+} from "@material-ui/core";
 import { blockActions } from "../../store/reducers/blockSlice";
 import { queActions } from "../../store/reducers/queSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +27,7 @@ const Block = (props) => {
     state.question.data.filter((question) => question.blk_id === block.id)
   );
   const [desc, setDesc] = useState(block.desc);
+  // const [shuffle,setShuffle] = useState(Boolean(block.shuffle));
   const dispatch = useDispatch();
 
   // console.log(block);
@@ -34,7 +43,7 @@ const Block = (props) => {
   }, [desc, code, dispatch]);
 
   return (
-    <div className={classes.root} style={{borderLeftColor:block.color}} >
+    <div className={classes.root} style={{ borderLeftColor: block.color }}>
       <div className={classes.head}>
         <TextField
           multiline
@@ -46,7 +55,6 @@ const Block = (props) => {
         <IconButton onClick={(e) => setAnchor(e.currentTarget)}>
           <BiGridVertical />
         </IconButton>
-        
       </div>
       <div className={classes.questions}>
         {questions.map((question, index) => {
@@ -81,6 +89,15 @@ const Block = (props) => {
             }}
           >
             &nbsp;New question&nbsp;
+          </MenuItem>
+          <Divider />
+          <MenuItem>
+            <FormControlLabel
+              control={<Checkbox checked={Boolean(block.shuffle)} onChange={e => {
+                dispatch(blockActions.editBlock({code,shuffle:e.target.checked}))
+              }} color="primary" />}
+              label="Shuffle questions"
+            />
           </MenuItem>
         </Menu>
       </Portal>

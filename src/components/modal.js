@@ -49,7 +49,7 @@ const SettingModal = (props) => {
 
   },[shuffle_children,dispatch,code])
 
-  console.log(section);
+  // console.log(section);
 
   return (
     <Modal
