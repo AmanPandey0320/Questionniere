@@ -12,6 +12,9 @@ const formSlice = createSlice({
     section_count: 0,
     created_at:undefined,
     last_edited:undefined,
+    total_marks:0,
+    passing_marks:0,
+    show_marks:false,
     section: [],
   },
   reducers: {
@@ -22,9 +25,13 @@ const formSlice = createSlice({
       state.title = action.payload.title || state.title;
       state.type = action.payload.type || state.type;
       state.active = action.payload.action || state.active;
-      state.bg_color = action.payload.bg_color || state.bg_color;
       state.last_edited = Date.now();
       state.created_at = state.created_at || Date.now();
+      state.total_marks = action.payload.total_marks || state.total_marks;
+      state.passing_marks = action.payload.passing_marks || state.passing_marks;
+      if(action.payload.show_marks !== undefined){
+        state.show_marks = action.payload.show_marks;
+      }
     },
     addNewSection(state, action) {
       if (state.section.length === 0) {
@@ -74,6 +81,8 @@ const formSlice = createSlice({
       state.code = null;
       state.section = [];
       state.section_count=0;
+      state.title="Untitled";
+      state.desc= "None"
     }
   },
 });

@@ -9,12 +9,11 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     color: "#424242",
+    width:'100%',
     "&.brand": {
-      fontSize: "x-large",
+      fontSize: "xx-large",
     },
     "&.large":{
-      width:'512px',
-      marginInline:theme.spacing(4)
     }
   },
   appbar: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection:'row'
   },
   form:{
-      width:'100vw',
+      width:'60vw',
       display:'flex',
       flexDirection:'column',
       margin:0,
@@ -44,13 +43,57 @@ const useStyles = makeStyles((theme) => ({
   togglerText:{
     paddingTop:theme.spacing(1),
     textAlign:'center'
+  },
+  questionniare:{
+    display:'flex',
+    flexDirection:'row-reverse',
+    justifyContent:'space-between'
+  },
+  questionniareSetting:{
+    width:'21vw',
+    marginRight:16,
+    marginTop:16,
+  },
+  qnrSettingBody:{
+    borderRadius:8,
+    borderTopLeftRadius:'0px',
+    borderBottomLeftRadius:'0px',
+    boxShadow:"2px 2px 3px grey",
+    padding:'8px',
+    borderTopStyle:'solid',
+    borderTopColor:'#3f51b5',
+    borderTopWidth:'4px',
+    borderLeftStyle:'solid',
+    borderLeftColor:'#3f51b5',
+    borderLeftWidth:'1px',
+    marginTop:0,
+  },
+  qnrHead:{
+    width:'max-content',
+    backgroundColor:'#3f51b5',
+    color:'white',
+    padding:'4px 16px',
+    marginTop:'0px',
+    borderTopLeftRadius:'8px',
+    borderTopRightRadius:'8px'
+  },
+  qnr_cf:{
+    width:'8vw',
+    marginTop:"1%",
+    marginRight:'6px'
+  },
+  qnr_marks:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginTop:'4px',
   }
 }));
 
 export const theme = createTheme({
   palette:{
     primary:{
-      main:'#424242'
+      main:'#3f51b5'
     }
   }
 })

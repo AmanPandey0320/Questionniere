@@ -103,7 +103,7 @@ const Question = (props) => {
           </span>
         </span>
         <span>
-          <FormControl className={classes.formControl}>
+          <FormControl className={classes.formControl} >
             <InputLabel id={`SLCT_${code}_LBL`}>Input type</InputLabel>
             <Select
               value={input}

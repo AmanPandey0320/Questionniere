@@ -5,8 +5,13 @@ import {
   ThemeProvider,
   IconButton,
   Tooltip,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+  Select,
+  MenuItem,
+  FormControl,
 } from "@material-ui/core";
-import { GoSettings } from "react-icons/go";
 import { MdSend } from "react-icons/md";
 import useStyles, { theme } from "../UI-Styles/designer";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +20,7 @@ import { useEffect, useState } from "react";
 import Section from "../Layout/Section/section";
 import { submitFrom } from "../store/thunks/formThunk";
 import { useHistory } from "react-router";
+import UIRes from "../components/uiResponces";
 
 const Designer = (props) => {
   const classes = useStyles();
@@ -51,27 +57,11 @@ const Designer = (props) => {
     <div>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar className={classes.toolbarL}>
-          <ThemeProvider theme={theme}>
-            <TextField
-              value={title}
-              label="Title"
-              onChange={(e) => setTitle(e.target.value)}
-              className={`${classes.text} brand`}
-            />
-            <TextField
-              value={desc}
-              label="Description"
-              onChange={(e) => setDesc(e.target.value)}
-              className={`${classes.text} brand large`}
-            />
-          </ThemeProvider>
+          <Typography className={`${classes.text} brand`}>
+            Questionnaire
+          </Typography>
         </Toolbar>
         <Toolbar>
-          <Tooltip title="Form settings">
-            <IconButton>
-              <GoSettings color="#3f50b5" size="1.25em" />
-            </IconButton>
-          </Tooltip>
           <Tooltip title="Send settings">
             <IconButton onClick={(e) => dispatch(submitFrom(history))}>
               <MdSend color="#3f50b5" size="1.25em" />
@@ -115,14 +105,72 @@ const Designer = (props) => {
           </span>
         )}
       </div> */}
-      <div className={classes.form}>
-        {/* {sec < form.section.length && <Section key={sec} sec={sec} />} */}
-        {
-          form.section.map((section,index) => <Section key={section.code} sec={index} />)
-        }
+      <div className={classes.questionniare}>
+        <div className={classes.questionniareSetting}>
+          <div className={classes.qnrHead}>Settings</div>
+          <div className={classes.qnrSettingBody}>
+            <ThemeProvider theme={theme}>
+              <div>
+                <TextField
+                  value={title}
+                  label="Title"
+                  color="primary"
+                  onChange={(e) => setTitle(e.target.value)}
+                  className={`${classes.text} brand`}
+                />
+                <TextField
+                  value={desc}
+                  label="Description"
+                  color="primary"
+                  onChange={(e) => setDesc(e.target.value)}
+                  className={`${classes.text} brand large`}
+                />
+              </div>
+              <div className={classes.qnr_marks}>
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="Show marks"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="Shuffle section"
+                />
+              </div>
+              <div className={classes.qnr_marks}>
+                <TextField
+                  color="primary"
+                  className={classes.qnr_cf}
+                  defaultValue="0"
+                  label="Total marks"
+                  type="number"
+                />
+                <TextField
+                  color="primary"
+                  className={classes.qnr_cf}
+                  defaultValue="0"
+                  label="Passing marks"
+                  type="number"
+                />
+              </div>
+              <FormControl className={classes.qnr_cf}>
+                  <Select value={0} label="Type">
+                    <MenuItem value={0}>Quiz</MenuItem>
+                    <MenuItem value={1}>Feedback</MenuItem>
+                  </Select>
+                </FormControl>
+            </ThemeProvider>
+          </div>
+        </div>
+        <div className={classes.form}>
+          {/* {sec < form.section.length && <Section key={sec} sec={sec} />} */}
+          {form.section.map((section, index) => (
+            <Section key={section.code} sec={index} />
+          ))}
+        </div>
       </div>
       <br />
       <br />
+      <UIRes />
     </div>
   );
 };
