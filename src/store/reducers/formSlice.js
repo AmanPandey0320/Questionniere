@@ -7,7 +7,7 @@ const formSlice = createSlice({
     code: null,
     desc: '',
     title: "Untitled questioniere",
-    type: 1,
+    type: 0,
     active: 1,
     section_count: 0,
     created_at:undefined,
@@ -15,6 +15,7 @@ const formSlice = createSlice({
     total_marks:0,
     passing_marks:0,
     show_marks:false,
+    shuffle_section:false,
     section: [],
   },
   reducers: {
@@ -31,6 +32,12 @@ const formSlice = createSlice({
       state.passing_marks = action.payload.passing_marks || state.passing_marks;
       if(action.payload.show_marks !== undefined){
         state.show_marks = action.payload.show_marks;
+      }
+      if(action.payload.type !== undefined ){
+        state.type = action.payload.type;
+      }
+      if(action.payload.shuffle_section !== undefined ){
+        state.shuffle_section = action.payload.shuffle_section;
       }
     },
     addNewSection(state, action) {

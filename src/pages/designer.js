@@ -30,6 +30,11 @@ const Designer = (props) => {
   const [title, setTitle] = useState(form.title);
   const [desc, setDesc] = useState(form.desc);
   const [sec, setSec] = useState(0);
+  const [total_marks,setTot] = useState(form.total_marks);
+  const [passing_marks,setPass] = useState(form.passing_marks);
+  const [type,setType] = useState(form.type);
+  const [show_marks,setShow] = useState(form.show_marks);
+  const [shuffle_section,setShuffle] = useState(form.shuffle_section);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,12 +51,18 @@ const Designer = (props) => {
   }, [title, desc, dispatch]);
 
   useEffect(() => {
+
+    dispatch(formActions.editFormData({total_marks,passing_marks,shuffle_section,show_marks,type}))
+
+  },[total_marks,passing_marks,shuffle_section,show_marks,type,dispatch])
+
+  useEffect(() => {
     if (sec >= form.section.length) {
       setSec(form.section.length - 1);
     }
   }, [sec, form.section.length]);
 
-  // console.log(form.section);
+  console.log(form);
 
   return (
     <div>
@@ -69,42 +80,6 @@ const Designer = (props) => {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      {/* <div className={classes.toggler}>
-        <span>
-          <Tooltip title="Previous section">
-            <IconButton
-              onClick={(e) => {
-                sec !== 0 ? setSec((pre) => pre - 1) : setSec(sec);
-              }}
-            >
-              <MdArrowBack color="#3f50b5" />
-            </IconButton>
-          </Tooltip>
-        </span>
-        <div className={classes.togglerText}>Section {sec + 1}</div>
-        {sec + 1 < form.section.length ? (
-          <span>
-            <Tooltip title="Next section">
-              <IconButton onClick={(e) => setSec((pre) => pre + 1)}>
-                <MdArrowForward color="#3f50b5" />
-              </IconButton>
-            </Tooltip>
-          </span>
-        ) : (
-          <span>
-            <Tooltip title="New section">
-              <IconButton
-                onClick={(e) => {
-                  dispatch(formActions.addNewSection());
-                  setSec((pre) => pre + 1);
-                }}
-              >
-                <MdAdd color="#3f50b5" />
-              </IconButton>
-            </Tooltip>
-          </span>
-        )}
-      </div> */}
       <div className={classes.questionniare}>
         <div className={classes.questionniareSetting}>
           <div className={classes.qnrHead}>Settings</div>
@@ -128,17 +103,19 @@ const Designer = (props) => {
               </div>
               <div className={classes.qnr_marks}>
                 <FormControlLabel
-                  control={<Checkbox color="primary" />}
+                  control={<Checkbox onChange={e => setShow(e.target.checked)} checked={show_marks}  color="primary" />}
                   label="Show marks"
                 />
                 <FormControlLabel
-                  control={<Checkbox color="primary" />}
+                  control={<Checkbox onChange={e => setShuffle(e.target.checked)} checked={shuffle_section} color="primary" />}
                   label="Shuffle section"
                 />
               </div>
               <div className={classes.qnr_marks}>
                 <TextField
                   color="primary"
+                  value={total_marks}
+                  onChange={e => setTot(e.target.value)}
                   className={classes.qnr_cf}
                   defaultValue="0"
                   label="Total marks"
@@ -146,6 +123,8 @@ const Designer = (props) => {
                 />
                 <TextField
                   color="primary"
+                  value={passing_marks}
+                  onChange={e => setPass(e.target.value)}
                   className={classes.qnr_cf}
                   defaultValue="0"
                   label="Passing marks"
@@ -153,7 +132,7 @@ const Designer = (props) => {
                 />
               </div>
               <FormControl className={classes.qnr_cf}>
-                  <Select value={0} label="Type">
+                  <Select onChange={e => setType(e.target.value)} value={type} label="Type">
                     <MenuItem value={0}>Quiz</MenuItem>
                     <MenuItem value={1}>Feedback</MenuItem>
                   </Select>
