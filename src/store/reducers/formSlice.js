@@ -9,7 +9,6 @@ const formSlice = createSlice({
     title: "Untitled questioniere",
     type: 1,
     active: 1,
-    bg_color: "#ffffff",
     section_count: 0,
     created_at:undefined,
     last_edited:undefined,
@@ -42,20 +41,23 @@ const formSlice = createSlice({
         shuffle_children: 0,
         show_marks: 0,
         active: 1,
-        color: "#424242",
+        color:'#2196f3',
         block_count: 0,
         blocks: [],
       };
-      state.section = state.section.filter(sec => sec.qnr_id !== state.id)
       state.section_count = id;
       state.section.push(section);
     },
     editSection(state, action) {
-      const { code, title,blocks } = action.payload;
+      const { code, title,blocks,color,shuffle_children } = action.payload;
       const section = state.section.map((sec) => {
         if (sec.code === code) {
           sec.title = title || sec.title;
           sec.blocks = blocks || sec.blocks;
+          sec.color = color || sec.color;
+          if(shuffle_children !== undefined){
+            sec.shuffle_children = shuffle_children;
+          }
         }
         return sec;
       });

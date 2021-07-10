@@ -66,7 +66,7 @@ const questionSlice = createSlice({
     },
     clearQuestion(state, action) {
       state.count = 0;
-      state.data = [];ed
+      state.data = [];
     },
   },
 });

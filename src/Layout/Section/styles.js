@@ -5,22 +5,41 @@ const useStyles = makeStyles(theme => ({
     root:{
         display:'flex',
         flexDirection:'column',
+        width:'60vw',
+        marginTop:'4px',
+        padding:theme.spacing(2),
+        backgroundColor:"primary"
     },
     head:{
-        marginTop:theme.spacing(2),
-        width:'100%',
+        marginTop:'0px',
+        width:'96%',
         borderRadius:'8px',
+        borderTopLeftRadius:'0px',
         boxShadow:'2px 2px 4px grey',
         padding:'16px 8px',
         display:'flex',
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        borderTopWidth:'6px',
+        borderTopStyle:'solid',
+        borderLeftWidth:'2px',
+        borderLeftStyle:'solid'
     },
     headText:{
         width:'80%',
     },
     blocks:{
-
+      marginRight:0,
+      width:'96%'
+    },
+    sectionHead:{
+      width:'max-content',
+      padding:'8px 12px',
+      paddingRight:'16px',
+      color:'white',
+      borderTopRightRadius:'8px',
+      borderBottomRightRadius:'0px',
+      borderTopLeftRadius:'4px',
     }
 }));
 

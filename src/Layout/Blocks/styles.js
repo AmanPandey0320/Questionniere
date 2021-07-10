@@ -8,6 +8,8 @@ const useStyles = makeStyles(theme => ({
         marginTop:'8px',
         borderRadius:'4px',
         display:'flex',
+        borderLeftStyle:'solid',
+        borderLeftWidth:'4px',
         flexDirection:'column',
         '&:hover':{
             cursor:'pointer',

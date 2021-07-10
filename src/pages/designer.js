@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import { GoSettings } from "react-icons/go";
-import { MdSend, MdArrowForward, MdArrowBack, MdAdd } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import useStyles, { theme } from "../UI-Styles/designer";
 import { useSelector, useDispatch } from "react-redux";
 import { formActions } from "../store/reducers/formSlice";
@@ -45,6 +45,8 @@ const Designer = (props) => {
     }
   }, [sec, form.section.length]);
 
+  console.log(form.section);
+
   return (
     <div>
       <AppBar position="static" className={classes.appbar}>
@@ -77,7 +79,7 @@ const Designer = (props) => {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      <div className={classes.toggler}>
+      {/* <div className={classes.toggler}>
         <span>
           <Tooltip title="Previous section">
             <IconButton
@@ -112,9 +114,12 @@ const Designer = (props) => {
             </Tooltip>
           </span>
         )}
-      </div>
+      </div> */}
       <div className={classes.form}>
-        {sec < form.section.length && <Section key={sec} sec={sec} />}
+        {/* {sec < form.section.length && <Section key={sec} sec={sec} />} */}
+        {
+          form.section.map((section,index) => <Section key={section.code} sec={index} />)
+        }
       </div>
       <br />
       <br />

@@ -28,10 +28,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection:'row'
   },
   form:{
-      width:'60vw',
+      width:'100vw',
       display:'flex',
       flexDirection:'column',
-      margin:'auto'
+      margin:0,
+      padding:0
   },
   toggler:{
     width:'256px',

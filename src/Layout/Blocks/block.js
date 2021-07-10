@@ -15,7 +15,9 @@ const Block = (props) => {
   const [block] = useSelector((state) =>
     state.block.data.filter((block) => block.code === code)
   );
-  const questions = useSelector(state => state.question.data.filter(question => question.blk_id === block.id));
+  const questions = useSelector((state) =>
+    state.question.data.filter((question) => question.blk_id === block.id)
+  );
   const [desc, setDesc] = useState(block.desc);
   const dispatch = useDispatch();
 
@@ -32,8 +34,7 @@ const Block = (props) => {
   }, [desc, code, dispatch]);
 
   return (
-    <div className={classes.root}>
-
+    <div className={classes.root} style={{borderLeftColor:block.color}} >
       <div className={classes.head}>
         <TextField
           multiline
@@ -45,12 +46,13 @@ const Block = (props) => {
         <IconButton onClick={(e) => setAnchor(e.currentTarget)}>
           <BiGridVertical />
         </IconButton>
+        
       </div>
-      <div className = {classes.questions} >
-        {questions.map((question,index) => {
-          return(
-            <Question key = {question.code} index={index} code={question.code}/>
-          )
+      <div className={classes.questions}>
+        {questions.map((question, index) => {
+          return (
+            <Question key={question.code} index={index} code={question.code} />
+          );
         })}
       </div>
       <Portal>
