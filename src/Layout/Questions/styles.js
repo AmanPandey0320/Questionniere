@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     root:{
         backgroundColor:'whiteSmoke',
+        borderRightStyle:'solid',
+        borderRightWidth:'4px',
+        borderColor:theme.palette.primary.main
     },
     label:{
         fontSize:'small',
@@ -30,7 +33,7 @@ const useStyles = makeStyles(theme => ({
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
-        marginTop:'2px'
+        marginTop:'4px',
     },
     setting:{
         marginInline:theme.spacing(2),
@@ -38,7 +41,7 @@ const useStyles = makeStyles(theme => ({
         width:'96%',
         display:'flex',
         flexDirection:'row',
-        justifyContent:'space-between',
+        justifyContent:'space-evenly',
         flexWrap:'wrap'
     },
     marks:{

@@ -3,12 +3,13 @@ import { queActions } from "../../store/reducers/queSlice";
 import { optionActions } from "../../store/reducers/optionSlice";
 import OptionC from "./elements/optionC";
 import OptionR from "./elements/optionR";
+import SingleC from "./elements/singleC";
+import MultiR from "./elements/multiR";
 import useStyles from "./styles";
 import {
   TextField,
   IconButton,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
   FormControlLabel,
@@ -19,8 +20,19 @@ import {
   Menu,
   Divider,
 } from "@material-ui/core";
-import { MdAdd } from "react-icons/md";
-import { BiGridVertical } from "react-icons/bi";
+import {
+  MdAdd,
+  MdShortText,
+  MdDateRange,
+  MdArrowDropDownCircle,
+} from "react-icons/md";
+import { BsTextLeft, BsCheckBox, BsFileArrowUp } from "react-icons/bs";
+import {
+  BiGridVertical,
+  BiRadioCircleMarked,
+  BiTimeFive,
+} from "react-icons/bi";
+import { TiTick } from "react-icons/ti";
 import { useEffect, useState } from "react";
 import Portal from "../../components/portal";
 import Modal from "../../components/questionSettingsModal";
@@ -120,6 +132,62 @@ const Question = (props) => {
           <span className={classes.label}>Question {index + 1}</span>
         </span>
         <span>
+          <FormControl variant="outlined" color="primary" className={classes.formControl}>
+            <Select
+              value={input}
+              id={`SLCT_${code}`}
+              onChange={(e) => setInput(e.target.value)}
+            >
+              <MenuItem value={0}>
+                <MdShortText />
+                &nbsp;Small text
+              </MenuItem>
+              <MenuItem value={1}>
+                <BsTextLeft />
+                &nbsp;Long text
+              </MenuItem>
+              <MenuItem value={2}>
+                <BiRadioCircleMarked />
+                &nbsp;Single radio
+              </MenuItem>
+              <MenuItem value={3}>
+                <BiRadioCircleMarked />
+                &nbsp;Multiple radio
+              </MenuItem>
+              <MenuItem value={4}>
+                <BsCheckBox />
+                &nbsp;Single checkbox
+              </MenuItem>
+              <MenuItem value={5}>
+                <BsCheckBox />
+                &nbsp;Multiple checkbox
+              </MenuItem>
+              <MenuItem value={6}>
+                <MdDateRange />
+                &nbsp;Date &amp; time
+              </MenuItem>
+              <MenuItem value={7}>
+                <BsFileArrowUp />
+                &nbsp;File upload
+              </MenuItem>
+              <MenuItem value={8}>
+                <MdArrowDropDownCircle />
+                &nbsp;Dropdown
+              </MenuItem>
+              <MenuItem value={9}>
+                <MdDateRange />
+                &nbsp;Date
+              </MenuItem>
+              <MenuItem value={10}>
+                <BiTimeFive />
+                &nbsp;Time
+              </MenuItem>
+              <MenuItem value={11}>
+                <TiTick />
+                &nbsp;True/False
+              </MenuItem>
+            </Select>
+          </FormControl>
           <IconButton onClick={(e) => setAnchor(e.currentTarget)}>
             <BiGridVertical />
           </IconButton>
@@ -131,18 +199,20 @@ const Question = (props) => {
         className={classes.question}
         onChange={(e) => setQue(e.target.value)}
       />
-      {(input === 2 || input === 3 || input === 8) && (
+      {(input === 2 ||
+        input === 3 ||
+        input === 4 ||
+        input === 5 ||
+        input === 8) && (
         <div className={classes.options}>
           {input === 8 && options.length > 0 && (
-            <Select className={classes.dropdown} >
-              {
-                options.map(op => {
-                  return <MenuItem key={op.code} >{op.text}</MenuItem>
-                })
-              }
+            <Select className={classes.dropdown}>
+              {options.map((op) => {
+                return <MenuItem key={op.code}>{op.text}</MenuItem>;
+              })}
             </Select>
           )}
-          {input === 3 && (
+          {input === 5 && (
             <>
               {options.map((option) => {
                 return <OptionC key={option.code} code={option.code} />;
@@ -162,6 +232,21 @@ const Question = (props) => {
               </RadioGroup>
             </>
           )}
+          {input === 3 && (
+            <>
+              {options.map((option) => {
+                return <MultiR key={option.code} code={option.code} />;
+              })}
+            </>
+          )}
+          {input === 4 && (
+            <>
+              {options.map((option) => {
+                return <SingleC key={option.code} code={option.code} />;
+              })}
+            </>
+          )}
+
           <Button
             className={classes.addOP}
             variant="outlined"
@@ -248,7 +333,15 @@ const Question = (props) => {
           <Divider />
           <MenuItem>
             <FormControlLabel
-              disabled={!(input === 2 || input === 3 || input === 8)}
+              disabled={
+                !(
+                  input === 2 ||
+                  input === 3 ||
+                  input === 4 ||
+                  input === 5 ||
+                  input === 8
+                )
+              }
               label="Shuffle options"
               control={
                 <Checkbox
@@ -260,27 +353,7 @@ const Question = (props) => {
             />
           </MenuItem>
           <Divider />
-          <MenuItem>
-            <FormControl className={classes.formControl}>
-              <InputLabel id={`SLCT_${code}_LBL`}>Input type</InputLabel>
-              <Select
-                value={input}
-                id={`SLCT_${code}`}
-                onChange={(e) => setInput(e.target.value)}
-                labelId={`SLCT_${code}_LBL`}
-              >
-                <MenuItem value={0}>Small text</MenuItem>
-                <MenuItem value={1}>Long text</MenuItem>
-                <MenuItem value={2}>Single option</MenuItem>
-                <MenuItem value={3}>Multiple option</MenuItem>
-                <MenuItem value={4}>Date</MenuItem>
-                <MenuItem value={5}>Time</MenuItem>
-                <MenuItem value={6}>Date &amp; time</MenuItem>
-                <MenuItem value={7}>File upload</MenuItem>
-                <MenuItem value={8}>Dropdown</MenuItem>
-              </Select>
-            </FormControl>
-          </MenuItem>
+          <MenuItem></MenuItem>
         </Menu>
         <Modal code={question.code} open={modal} handleClose={setModal} />
       </Portal>
