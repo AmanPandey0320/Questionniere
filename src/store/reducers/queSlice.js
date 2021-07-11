@@ -65,6 +65,7 @@ const questionSlice = createSlice({
         paddingR,
         paddingT,
         paddingB,
+        shuffle,
       } = action.payload;
       state.data.map((question) => {
         if (question.code === code || question.id === id) {
@@ -110,6 +111,10 @@ const questionSlice = createSlice({
           }
           if(paddingB !== undefined){
             question.paddingB = paddingB;
+          }
+
+          if(shuffle !== undefined){
+            question.shuffle = shuffle
           }
         }
         return question;

@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
+    [theme.breakpoints.between('xs','sm')]:{
+      flexDirection:'column'
+    }
   },
   col: {
     display: "flex",
@@ -33,10 +36,7 @@ const useStyles = makeStyles((theme) => ({
   width: {
     width: 160,
     marginInline: "16px",
-  },
-  input: {
-    width: 42,
-  },
+  }
 }));
 
 const SettingModal = (props) => {

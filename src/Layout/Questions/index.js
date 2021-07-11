@@ -45,6 +45,7 @@ const Question = (props) => {
   const [radio, setRadio] = useState(0);
   const [anchor, setAnchor] = useState(null);
   const [modal, setModal] = useState(false);
+  const [shuffle, setShuffle] = useState(Boolean(question.shuffle));
 
   const rootStyles = {
     width: `${question.width}%`,
@@ -56,9 +57,7 @@ const Question = (props) => {
     paddingRight: question.paddingR,
     paddingTop: question.paddingT,
     paddingBottom: question.paddingB,
-  }
-
-  
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -100,6 +99,7 @@ const Question = (props) => {
           code,
           marks,
           showMarks,
+          shuffle,
           require,
           negative: negmarks,
         })
@@ -109,7 +109,9 @@ const Question = (props) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [code, marks, negmarks, showMarks, require, dispatch]);
+  }, [code, marks, negmarks, showMarks, require, shuffle, dispatch]);
+
+  // console.log(question)
 
   return (
     <div className={classes.root} style={{ ...rootStyles }}>
@@ -245,6 +247,20 @@ const Question = (props) => {
             }}
           >
             Setting
+          </MenuItem>
+          <Divider />
+          <MenuItem>
+            <FormControlLabel
+              disabled={!(input === 2 || input === 3)}
+              label="Shuffle options"
+              control={
+                <Checkbox
+                  checked={shuffle}
+                  color="primary"
+                  onChange={(e) => setShuffle(e.target.checked)}
+                />
+              }
+            />
           </MenuItem>
           <Divider />
           <MenuItem>

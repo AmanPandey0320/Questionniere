@@ -30,11 +30,11 @@ const Designer = (props) => {
   const [title, setTitle] = useState(form.title);
   const [desc, setDesc] = useState(form.desc);
   const [sec, setSec] = useState(0);
-  const [total_marks,setTot] = useState(form.total_marks);
-  const [passing_marks,setPass] = useState(form.passing_marks);
-  const [type,setType] = useState(form.type);
-  const [show_marks,setShow] = useState(form.show_marks);
-  const [shuffle_section,setShuffle] = useState(form.shuffle_section);
+  const [total_marks, setTot] = useState(form.total_marks);
+  const [passing_marks, setPass] = useState(form.passing_marks);
+  const [type, setType] = useState(form.type);
+  const [show_marks, setShow] = useState(form.show_marks);
+  const [shuffle_section, setShuffle] = useState(form.shuffle_section);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,10 +51,16 @@ const Designer = (props) => {
   }, [title, desc, dispatch]);
 
   useEffect(() => {
-
-    dispatch(formActions.editFormData({total_marks,passing_marks,shuffle_section,show_marks,type}))
-
-  },[total_marks,passing_marks,shuffle_section,show_marks,type,dispatch])
+    dispatch(
+      formActions.editFormData({
+        total_marks,
+        passing_marks,
+        shuffle_section,
+        show_marks,
+        type,
+      })
+    );
+  }, [total_marks, passing_marks, shuffle_section, show_marks, type, dispatch]);
 
   useEffect(() => {
     if (sec >= form.section.length) {
@@ -102,41 +108,59 @@ const Designer = (props) => {
                 />
               </div>
               <div className={classes.qnr_marks}>
-                {type === 0 && <FormControlLabel
-                  control={<Checkbox onChange={e => setShow(e.target.checked)} checked={show_marks}  color="primary" />}
-                  label="Show marks"
-                />}
+                {type === 0 && (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={(e) => setShow(e.target.checked)}
+                        checked={show_marks}
+                        color="primary"
+                      />
+                    }
+                    label="Show marks"
+                  />
+                )}
                 <FormControlLabel
-                  control={<Checkbox onChange={e => setShuffle(e.target.checked)} checked={shuffle_section} color="primary" />}
+                  control={
+                    <Checkbox
+                      onChange={(e) => setShuffle(e.target.checked)}
+                      checked={shuffle_section}
+                      color="primary"
+                    />
+                  }
                   label="Shuffle section"
                 />
               </div>
-              {type === 0 && <div className={classes.qnr_marks}>
-                <TextField
-                  color="primary"
-                  value={total_marks}
-                  onChange={e => setTot(e.target.value)}
-                  className={classes.qnr_cf}
-                  defaultValue="0"
-                  label="Total marks"
-                  type="number"
-                />
-                <TextField
-                  color="primary"
-                  value={passing_marks}
-                  onChange={e => setPass(e.target.value)}
-                  className={classes.qnr_cf}
-                  defaultValue="0"
-                  label="Passing marks"
-                  type="number"
-                />
-              </div>}
+              {type === 0 && (
+                <div className={classes.qnr_marks}>
+                  <TextField
+                    color="primary"
+                    value={total_marks}
+                    onChange={(e) => setTot(e.target.value)}
+                    className={classes.qnr_cf}
+                    label="Total marks"
+                    type="number"
+                  />
+                  <TextField
+                    color="primary"
+                    value={passing_marks}
+                    onChange={(e) => setPass(e.target.value)}
+                    className={classes.qnr_cf}
+                    label="Passing marks"
+                    type="number"
+                  />
+                </div>
+              )}
               <FormControl className={classes.qnr_cf}>
-                  <Select onChange={e => setType(e.target.value)} value={type} label="Type">
-                    <MenuItem value={0}>Quiz</MenuItem>
-                    <MenuItem value={1}>Feedback</MenuItem>
-                  </Select>
-                </FormControl>
+                <Select
+                  onChange={(e) => setType(e.target.value)}
+                  value={type}
+                  label="Type"
+                >
+                  <MenuItem value={0}>Quiz</MenuItem>
+                  <MenuItem value={1}>Feedback</MenuItem>
+                </Select>
+              </FormControl>
             </ThemeProvider>
           </div>
         </div>

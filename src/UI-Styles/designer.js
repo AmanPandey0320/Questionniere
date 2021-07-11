@@ -93,8 +93,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop:"1%",
     marginRight:'6px',
     [theme.breakpoints.between('xs','sm')]:{
-      width:'42vw',
-      margin:'auto',
+      width:'42%',
+      marginLeft:8,
       marginRight:'0px'
     }
   },
@@ -103,7 +103,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection:'row',
     justifyContent:'space-between',
     marginTop:'4px',
-    flexWrap:'wrap'
+    flexWrap:'wrap',
+    [theme.breakpoints.between('xs','sm')]:{
+     justifyContent:'initial'
+    }
   }
 }));
 

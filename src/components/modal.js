@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
+    [theme.breakpoints.between('xs','sm')]:{
+      flexDirection:'column'
+    }
   },
   color: {
     display: "flex",
