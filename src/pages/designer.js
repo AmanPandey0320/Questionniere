@@ -102,16 +102,16 @@ const Designer = (props) => {
                 />
               </div>
               <div className={classes.qnr_marks}>
-                <FormControlLabel
+                {type === 0 && <FormControlLabel
                   control={<Checkbox onChange={e => setShow(e.target.checked)} checked={show_marks}  color="primary" />}
                   label="Show marks"
-                />
+                />}
                 <FormControlLabel
                   control={<Checkbox onChange={e => setShuffle(e.target.checked)} checked={shuffle_section} color="primary" />}
                   label="Shuffle section"
                 />
               </div>
-              <div className={classes.qnr_marks}>
+              {type === 0 && <div className={classes.qnr_marks}>
                 <TextField
                   color="primary"
                   value={total_marks}
@@ -130,7 +130,7 @@ const Designer = (props) => {
                   label="Passing marks"
                   type="number"
                 />
-              </div>
+              </div>}
               <FormControl className={classes.qnr_cf}>
                   <Select onChange={e => setType(e.target.value)} value={type} label="Type">
                     <MenuItem value={0}>Quiz</MenuItem>

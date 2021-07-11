@@ -27,6 +27,15 @@ const questionSlice = createSlice({
         require: 0,
         question: "This is a question",
         valid: true,
+        width:100,
+        marginL:0,
+        marginR:0,
+        marginT:0,
+        marginB:0,
+        paddingL:0,
+        paddingR:0,
+        paddingT:0,
+        paddingB:0,
       };
       state.count = id;
       state.data.push(question);
@@ -47,6 +56,15 @@ const questionSlice = createSlice({
         options,
         valid,
         id,
+        width,
+        marginB,
+        marginL,
+        marginR,
+        marginT,
+        paddingL,
+        paddingR,
+        paddingT,
+        paddingB,
       } = action.payload;
       state.data.map((question) => {
         if (question.code === code || question.id === id) {
@@ -59,6 +77,39 @@ const questionSlice = createSlice({
           question.options = options || question.options;
           if (valid !== undefined) {
             question.valid = valid;
+          }
+          if(width !== undefined){
+            question.width = width;
+          }
+
+          //margin 
+          
+          if(marginL !== undefined){
+            question.marginL = marginL;
+          }
+          if(marginR !== undefined){
+            question.marginR = marginR;
+          }
+          if(marginT !== undefined){
+            question.marginT = marginT;
+          }
+          if(marginB !== undefined){
+            question.marginB = marginB;
+          }
+          
+          //padding
+
+          if(paddingL !== undefined){
+            question.paddingL = paddingL;
+          }
+          if(paddingR !== undefined){
+            question.paddingR = paddingR;
+          }
+          if(paddingT !== undefined){
+            question.paddingT = paddingT;
+          }
+          if(paddingB !== undefined){
+            question.paddingB = paddingB;
           }
         }
         return question;

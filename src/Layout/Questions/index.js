@@ -16,12 +16,16 @@ import {
   Switch,
   Button,
   RadioGroup,
+  Menu,
+  Divider,
 } from "@material-ui/core";
-import { MdDelete, MdAdd } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
+import { BiGridVertical } from "react-icons/bi";
 import { useEffect, useState } from "react";
+import Portal from "../../components/portal";
+import Modal from "../../components/questionSettingsModal";
 
 const Question = (props) => {
-
   const { code, index } = props;
   const [question] = useSelector((state) =>
     state.question.data.filter((que) => que.code === code)
@@ -29,6 +33,7 @@ const Question = (props) => {
   const options = useSelector((state) =>
     state.option.data.filter((option) => option.que_id === question.id)
   );
+  const type = useSelector((state) => state.form.type);
   const [que, setQue] = useState(question.question);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -37,7 +42,23 @@ const Question = (props) => {
   const [negmarks, setNegmarks] = useState(0);
   const [showMarks, setShowMarks] = useState(Boolean(question.show_marks));
   const [require, setRequire] = useState(Boolean(question.require));
-  const [radio,setRadio] = useState(0)
+  const [radio, setRadio] = useState(0);
+  const [anchor, setAnchor] = useState(null);
+  const [modal, setModal] = useState(false);
+
+  const rootStyles = {
+    width: `${question.width}%`,
+    marginLeft: question.marginL,
+    marginRight: question.marginR,
+    marginTop: question.marginT,
+    marginBottom: question.marginB,
+    paddingLeft: question.paddingL,
+    paddingRight: question.paddingR,
+    paddingTop: question.paddingT,
+    paddingBottom: question.paddingB,
+  }
+
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -62,14 +83,15 @@ const Question = (props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(optionActions.setSingleCorrect({que_id:question.id,code:radio}))
-    },1000);
+      dispatch(
+        optionActions.setSingleCorrect({ que_id: question.id, code: radio })
+      );
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
-    }
-
-  },[radio,dispatch,question.id]);
+    };
+  }, [radio, dispatch, question.id]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -90,37 +112,15 @@ const Question = (props) => {
   }, [code, marks, negmarks, showMarks, require, dispatch]);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ ...rootStyles }}>
       <div className={classes.head}>
         <span>
           <span className={classes.label}>Question {index + 1}</span>
-          <span className={classes.deleteBtn}>
-            <IconButton
-              onClick={(e) => dispatch(queActions.deleteQuestion({ code }))}
-            >
-              <MdDelete />
-            </IconButton>
-          </span>
         </span>
         <span>
-          <FormControl className={classes.formControl} >
-            <InputLabel id={`SLCT_${code}_LBL`}>Input type</InputLabel>
-            <Select
-              value={input}
-              id={`SLCT_${code}`}
-              onChange={(e) => setInput(e.target.value)}
-              labelId={`SLCT_${code}_LBL`}
-            >
-              <MenuItem value={0}>Small text</MenuItem>
-              <MenuItem value={1}>Long text</MenuItem>
-              <MenuItem value={2}>Single option</MenuItem>
-              <MenuItem value={3}>Multiple option</MenuItem>
-              <MenuItem value={4}>Date</MenuItem>
-              <MenuItem value={5}>Time</MenuItem>
-              <MenuItem value={6}>Date &amp; time</MenuItem>
-              <MenuItem value={7}>File upload</MenuItem>
-            </Select>
-          </FormControl>
+          <IconButton onClick={(e) => setAnchor(e.currentTarget)}>
+            <BiGridVertical />
+          </IconButton>
         </span>
       </div>
       <TextField
@@ -155,7 +155,11 @@ const Question = (props) => {
       )}
       {input === 2 && (
         <div className={classes.options}>
-          <RadioGroup onChange={e => setRadio(e.target.value)} value={radio} name={` RAD_${code}`} >
+          <RadioGroup
+            onChange={(e) => setRadio(e.target.value)}
+            value={radio}
+            name={` RAD_${code}`}
+          >
             {options.map((option) => {
               return <OptionR key={option.code} code={option.code} />;
             })}
@@ -180,30 +184,34 @@ const Question = (props) => {
         </div>
       )}
       <div className={classes.setting}>
-        <TextField
-          value={marks}
-          onChange={(e) => setMarks(e.target.value)}
-          label="marks"
-          type="number"
-          className={classes.marks}
-        />
-        <TextField
-          value={negmarks}
-          onChange={(e) => setNegmarks(e.target.value)}
-          type="number"
-          label="-ve mark"
-          className={classes.marks}
-        />
-        <FormControlLabel
-          label="Show marks"
-          control={
-            <Checkbox
-              checked={showMarks}
-              onChange={(e) => setShowMarks(e.target.checked)}
-              color="primary"
+        {type === 0 && (
+          <>
+            <TextField
+              value={marks}
+              onChange={(e) => setMarks(e.target.value)}
+              label="marks"
+              type="number"
+              className={classes.marks}
             />
-          }
-        />
+            <TextField
+              value={negmarks}
+              onChange={(e) => setNegmarks(e.target.value)}
+              type="number"
+              label="-ve mark"
+              className={classes.marks}
+            />
+            <FormControlLabel
+              label="Show marks"
+              control={
+                <Checkbox
+                  checked={showMarks}
+                  onChange={(e) => setShowMarks(e.target.checked)}
+                  color="primary"
+                />
+              }
+            />
+          </>
+        )}
         <FormControlLabel
           label="Requied"
           control={
@@ -215,6 +223,53 @@ const Question = (props) => {
           }
         />
       </div>
+      <Portal>
+        <Menu
+          open={Boolean(anchor)}
+          anchorEl={anchor}
+          onClose={(e) => setAnchor(null)}
+          id={question.code}
+        >
+          <MenuItem
+            onClick={(e) => {
+              dispatch(queActions.deleteQuestion({ code }));
+              setAnchor(null);
+            }}
+          >
+            Delete
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              setModal(true);
+              setAnchor(null);
+            }}
+          >
+            Setting
+          </MenuItem>
+          <Divider />
+          <MenuItem>
+            <FormControl className={classes.formControl}>
+              <InputLabel id={`SLCT_${code}_LBL`}>Input type</InputLabel>
+              <Select
+                value={input}
+                id={`SLCT_${code}`}
+                onChange={(e) => setInput(e.target.value)}
+                labelId={`SLCT_${code}_LBL`}
+              >
+                <MenuItem value={0}>Small text</MenuItem>
+                <MenuItem value={1}>Long text</MenuItem>
+                <MenuItem value={2}>Single option</MenuItem>
+                <MenuItem value={3}>Multiple option</MenuItem>
+                <MenuItem value={4}>Date</MenuItem>
+                <MenuItem value={5}>Time</MenuItem>
+                <MenuItem value={6}>Date &amp; time</MenuItem>
+                <MenuItem value={7}>File upload</MenuItem>
+              </Select>
+            </FormControl>
+          </MenuItem>
+        </Menu>
+        <Modal code={question.code} open={modal} handleClose={setModal} />
+      </Portal>
     </div>
   );
 };

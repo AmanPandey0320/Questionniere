@@ -3,9 +3,6 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     root:{
         backgroundColor:'whiteSmoke',
-        marginTop:4,
-        marginBottom:4,
-        padding:'8px 4px'
     },
     label:{
         fontSize:'small',
@@ -29,7 +26,8 @@ const useStyles = makeStyles(theme => ({
     head:{
         display:'flex',
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        marginTop:'2px'
     },
     setting:{
         marginInline:theme.spacing(2),
