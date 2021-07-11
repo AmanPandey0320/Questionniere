@@ -32,7 +32,7 @@ const Option = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(optionActions.editOption({ code, isTrue }));
-    }, 1000);
+    }, 10);
     return () => {
       clearTimeout(timer);
     };

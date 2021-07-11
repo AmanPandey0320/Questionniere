@@ -13,8 +13,11 @@ const useStyles = makeStyles(theme => ({
         boxShadow:"1px 1px 3px grey",
     },
     question:{
-        width:'96%',
+        width:'64%',
         marginTop:'4px',
+        [theme.breakpoints.between('xs','sm')]:{
+            width:'96%'
+        }
     },
     deleteBtn:{
         color:'red'
@@ -42,7 +45,7 @@ const useStyles = makeStyles(theme => ({
         width:'96px'
     },
     options:{
-        width:'92%',
+        width:'96%',
         margin:'auto',
         display:'flex',
         flexDirection:'column',
@@ -50,7 +53,14 @@ const useStyles = makeStyles(theme => ({
         marginBottom:theme.spacing(1),
     },
     addOP:{
-        width:'40%'
+        width:'32%',
+        [theme.breakpoints.between('xs','sm')]:{
+            width:'50%'
+        }
+    },
+    dropdown:{
+        width:'32%',
+        marginBottom:'4px'
     }
 }));
 export default useStyles;

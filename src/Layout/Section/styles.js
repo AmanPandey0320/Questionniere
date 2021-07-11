@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     },
     sectionHead:{
       width:'max-content',
-      padding:'8px 12px',
+      padding:'4px 12px',
       paddingRight:'16px',
       color:'white',
       borderTopRightRadius:'8px',

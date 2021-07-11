@@ -85,7 +85,7 @@ const Question = (props) => {
       dispatch(
         optionActions.setSingleCorrect({ que_id: question.id, code: radio })
       );
-    }, 1000);
+    }, 10);
 
     return () => {
       clearTimeout(timer);
@@ -131,43 +131,40 @@ const Question = (props) => {
         className={classes.question}
         onChange={(e) => setQue(e.target.value)}
       />
-      {input === 3 && (
+      {(input === 2 || input === 3 || input === 8) && (
         <div className={classes.options}>
-          {options.map((option) => {
-            return <OptionC key={option.code} code={option.code} />;
-          })}
-          <Button
-            className={classes.addOP}
-            onClick={(e) =>
-              dispatch(
-                optionActions.addOptions({
-                  qnr_id: question.qnr_id,
-                  sec_id: question.sec_id,
-                  blk_id: question.blk_id,
-                  que_id: question.id,
+          {input === 8 && options.length > 0 && (
+            <Select className={classes.dropdown} >
+              {
+                options.map(op => {
+                  return <MenuItem key={op.code} >{op.text}</MenuItem>
                 })
-              )
-            }
-            color="primary"
-          >
-            <MdAdd />
-            &nbsp;Add option
-          </Button>
-        </div>
-      )}
-      {input === 2 && (
-        <div className={classes.options}>
-          <RadioGroup
-            onChange={(e) => setRadio(e.target.value)}
-            value={radio}
-            name={` RAD_${code}`}
-          >
-            {options.map((option) => {
-              return <OptionR key={option.code} code={option.code} />;
-            })}
-          </RadioGroup>
+              }
+            </Select>
+          )}
+          {input === 3 && (
+            <>
+              {options.map((option) => {
+                return <OptionC key={option.code} code={option.code} />;
+              })}
+            </>
+          )}
+          {(input === 2 || input === 8) && (
+            <>
+              <RadioGroup
+                onChange={(e) => setRadio(e.target.value)}
+                value={radio}
+                name={` RAD_${code}`}
+              >
+                {options.map((option) => {
+                  return <OptionR key={option.code} code={option.code} />;
+                })}
+              </RadioGroup>
+            </>
+          )}
           <Button
             className={classes.addOP}
+            variant="outlined"
             onClick={(e) =>
               dispatch(
                 optionActions.addOptions({
@@ -251,7 +248,7 @@ const Question = (props) => {
           <Divider />
           <MenuItem>
             <FormControlLabel
-              disabled={!(input === 2 || input === 3)}
+              disabled={!(input === 2 || input === 3 || input === 8)}
               label="Shuffle options"
               control={
                 <Checkbox
@@ -280,6 +277,7 @@ const Question = (props) => {
                 <MenuItem value={5}>Time</MenuItem>
                 <MenuItem value={6}>Date &amp; time</MenuItem>
                 <MenuItem value={7}>File upload</MenuItem>
+                <MenuItem value={8}>Dropdown</MenuItem>
               </Select>
             </FormControl>
           </MenuItem>
