@@ -35,7 +35,8 @@ const useStyles = makeStyles(theme => ({
         width:'96%',
         display:'flex',
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        flexWrap:'wrap'
     },
     marks:{
         width:'96px'

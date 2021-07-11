@@ -31,7 +31,11 @@ const useStyles = makeStyles((theme) => ({
       display:'flex',
       flexDirection:'column',
       margin:0,
-      padding:0
+      padding:0,
+      [theme.breakpoints.between('xs','sm')]:{
+        width:'96vw',
+        margin:'auto'
+      }
   },
   toggler:{
     width:'256px',
@@ -47,12 +51,19 @@ const useStyles = makeStyles((theme) => ({
   questionniare:{
     display:'flex',
     flexDirection:'row-reverse',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    [theme.breakpoints.between('xs','sm')]:{
+      flexDirection:'column'
+    }
   },
   questionniareSetting:{
     width:'21vw',
     marginRight:16,
     marginTop:16,
+    [theme.breakpoints.between('xs','sm')]:{
+      width:'96vw',
+      margin:'auto'
+    }
   },
   qnrSettingBody:{
     borderRadius:8,
@@ -80,13 +91,19 @@ const useStyles = makeStyles((theme) => ({
   qnr_cf:{
     width:'8vw',
     marginTop:"1%",
-    marginRight:'6px'
+    marginRight:'6px',
+    [theme.breakpoints.between('xs','sm')]:{
+      width:'42vw',
+      margin:'auto',
+      marginRight:'0px'
+    }
   },
   qnr_marks:{
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-between',
     marginTop:'4px',
+    flexWrap:'wrap'
   }
 }));
 

@@ -8,7 +8,10 @@ const useStyles = makeStyles(theme => ({
         width:'100%',
         marginTop:'4px',
         padding:theme.spacing(2),
-        backgroundColor:"primary"
+        backgroundColor:"primary",
+        [theme.breakpoints.between('xs','sm')]:{
+          padding:theme.spacing(0),
+        }
     },
     head:{
         marginTop:'0px',
