@@ -29,7 +29,7 @@ const Option = (props) => {
     };
   }, [text, dispatch, code]);
 
-  console.log(option);
+  // console.log(option);
   return (
       <FormControlLabel
         control={

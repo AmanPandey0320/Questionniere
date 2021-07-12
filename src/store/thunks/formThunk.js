@@ -17,7 +17,7 @@ export const initForm = (history) => {
     dispatch(queActions.clearQuestion());
     dispatch(optionActions.clearOption());
 
-    console.log(store.getState());
+    // console.log(store.getState());
     
     db.collection("forms")
       .add({})
@@ -27,8 +27,8 @@ export const initForm = (history) => {
         dispatch(formActions.editFormData({ id, code }));
         dispatch(formActions.addNewSection());
         dispatch(uiActions.toggleDrop());
-        const form = store.getState().form;
-        console.log(form);
+        // const form = store.getState().form;
+        // console.log(form);
         history.push(`/form/${code}`);
       })
       .catch((err) => {
@@ -86,7 +86,7 @@ export const submitFrom = (history) => {
     });
     form = store.getState().form;
 
-    console.log(form)
+    // console.log(form)
 
     const id = form.id;
 

@@ -42,7 +42,7 @@ const Option = (props) => {
       setIsTrue(option.isTrue)
   },[option.isTrue])
 
-  console.log(option);
+  // console.log(option);
   return (
     <div className={classes.root}>
       <FormControlLabel

@@ -68,7 +68,7 @@ const Designer = (props) => {
     }
   }, [sec, form.section.length]);
 
-  console.log(form);
+  // console.log(form);
 
   return (
     <div>

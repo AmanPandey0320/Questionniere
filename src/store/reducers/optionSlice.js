@@ -26,7 +26,9 @@ const optionSlice = createSlice({
       state.data = state.data.map((op) => {
         if (op.code === code) {
           op.text = text || op.text;
-          op.isTrue = isTrue || op.isTrue;
+          if(isTrue !== undefined){
+            op.isTrue = isTrue;
+          }
         }
         return op;
       });

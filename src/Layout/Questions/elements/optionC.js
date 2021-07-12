@@ -38,7 +38,7 @@ const Option = (props) => {
     };
   }, [isTrue, dispatch, code]);
 
-  console.log(option);
+  // console.log(option);
   return (
     <div className={classes.root}>
       <FormControlLabel
