@@ -18,7 +18,7 @@ const Dashboard = (props) => {
     dispatch(getAllForms());
   }, [dispatch]);
 
-  console.log(forms);
+  // console.log(forms);
 
   return (
     <div>
@@ -38,7 +38,7 @@ const Dashboard = (props) => {
         {forms.map((form) => {
           if(form.title){
             return (
-              <div onClick={e => dispatch(createForm(history,form.id))} className={classes.formElement}>
+              <div key={form.id} onClick={e => dispatch(createForm(history,form.id))} className={classes.formElement}>
                 <div>{form.title}</div>
               </div>
             );

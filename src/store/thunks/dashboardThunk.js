@@ -26,7 +26,7 @@ export const getAllForms = () => {
         });
         dispatch(allFormAction.addForms({ data }));
         dispatch(uiActions.toggleDrop());
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => {
         dispatch(uiActions.toggleDrop());
