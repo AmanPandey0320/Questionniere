@@ -9,38 +9,53 @@ import {
   Divider,
 } from "@material-ui/core";
 import { blockActions } from "../../store/reducers/blockSlice";
-import { queActions } from "../../store/reducers/queSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { BiGridVertical } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Question from "../Questions/index";
 import Portal from "../../components/portal";
+import { addQuestion, handleDelete, handleShuffle } from "./logic";
+
+/**
+ *
+ * @param {
+ * code
+ * } props
+ * @returns
+ */
 
 const Block = (props) => {
-  const classes = useStyles();
-  const { code } = props;
-  const [anchor, setAnchor] = useState(null);
+  //fetching block props
   const [block] = useSelector((state) =>
-    state.block.data.filter((block) => block.code === code)
+    state.block.data.filter((block) => block.code === props.code)
   );
+
+  //fetching questions of a block from store
   const questions = useSelector((state) =>
     state.question.data.filter((question) => question.blk_id === block.id)
   );
+
+  //variables
   const [desc, setDesc] = useState(block.desc);
-  // const [shuffle,setShuffle] = useState(Boolean(block.shuffle));
   const dispatch = useDispatch();
+  const classes = useStyles();
+  const [anchor, setAnchor] = useState(null);
+  const isMounted = useRef(false);
+  const { code } = props;
+
+  //updating store on changing block desc
+  useEffect(() => {
+    if (isMounted.current) {
+      //runs on second render
+      dispatch(blockActions.editBlock({ code, desc }));
+    } else {
+      //runs on first render
+      isMounted.current = true;
+    }
+  }, [desc, code, dispatch]);
 
   // console.log(block);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(blockActions.editBlock({ code, desc }));
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [desc, code, dispatch]);
+  // console.log(questions);
 
   return (
     <div className={classes.root} style={{ borderLeftColor: block.color }}>
@@ -70,37 +85,32 @@ const Block = (props) => {
           keepMounted
           onClose={(e) => setAnchor(null)}
           id={`MENU_${code}`}
+          onClick={(e) => setAnchor(null)}
         >
-          <MenuItem
-            onClick={(e) => dispatch(blockActions.deleteBlock({ code }))}
-          >
-            &nbsp;Delete&nbsp;
-          </MenuItem>
-          <MenuItem
-            onClick={(e) => {
-              dispatch(
-                queActions.addQuestion({
-                  qnr_id: block.qnr_id,
-                  sec_id: block.sec_id,
-                  blk_id: block.id,
-                })
-              );
-              setAnchor(null);
-            }}
-          >
+          <MenuItem onClick={handleDelete(code)}>&nbsp;Delete&nbsp;</MenuItem>
+          <MenuItem onClick={addQuestion(block)}>
             &nbsp;New question&nbsp;
           </MenuItem>
           <Divider />
           <MenuItem>
             <FormControlLabel
-              control={<Checkbox checked={Boolean(block.shuffle)} onChange={e => {
-                dispatch(blockActions.editBlock({code,shuffle:e.target.checked}))
-              }} color="primary" />}
+              control={
+                <Checkbox
+                  checked={Boolean(block.shuffle)}
+                  onChange={handleShuffle(code)}
+                  color="primary"
+                />
+              }
               label="Shuffle questions"
             />
           </MenuItem>
         </Menu>
       </Portal>
+      {questions.length === 0 && (
+        <small style={{ color: "tomato" }}>
+          **This block is empty and will be deleted during subimssion
+        </small>
+      )}
     </div>
   );
 };

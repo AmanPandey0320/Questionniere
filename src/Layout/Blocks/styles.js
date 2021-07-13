@@ -11,11 +11,11 @@ const useStyles = makeStyles(theme => ({
         borderLeftStyle:'solid',
         borderLeftWidth:'4px',
         flexDirection:'column',
-        transition:'0.1s',
+        // transition:'0.1s',
         '&:hover':{
             cursor:'pointer',
-            transform:'scaleX(1.01)',
-            transition:'0.1s'
+            // transform:'scaleX(1.01)',
+            // transition:'0.1s'
         },
     },
     head:{

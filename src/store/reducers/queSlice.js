@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setType } from './Reducers/questionReducer'
 
 const questionSlice = createSlice({
   name: "question",
@@ -7,6 +8,7 @@ const questionSlice = createSlice({
     data: [],
   },
   reducers: {
+    setType,
     addQuestion(state, action) {
       const { qnr_id, blk_id, sec_id } = action.payload;
       const id = state.count + 1;

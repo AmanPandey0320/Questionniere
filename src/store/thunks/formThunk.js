@@ -18,7 +18,7 @@ export const initForm = (history) => {
     dispatch(optionActions.clearOption());
 
     // console.log(store.getState());
-    
+
     db.collection("forms")
       .add({})
       .then((res) => {
@@ -52,12 +52,20 @@ export const submitFrom = (history) => {
     question.data.forEach((que) => {
       const options = option.data.filter((op) => op.que_id === que.id);
       if (
-        ((que.input_type === 2 || que.input_type === 3) &&
+        ((que.input_type === 2 ||
+          que.input_type === 3 ||
+          que.input_type === 4 ||
+          que.input_type === 5 ||
+          que.input_type === 8) &&
           options.length === 0) ||
         que.valid === false
       ) {
         store.dispatch(queActions.deleteQuestion({ code: que.code }));
-      } else {
+      } else if((que.input_type === 2 ||
+        que.input_type === 3 ||
+        que.input_type === 4 ||
+        que.input_type === 5 ||
+        que.input_type === 8)) {
         store.dispatch(queActions.editQuestion({ options, code: que.code }));
       }
     });
@@ -98,11 +106,11 @@ export const submitFrom = (history) => {
         dispatch(
           uiActions.sendNotification({
             severity: "success",
-            text: 'Form uploaded',
+            text: "Form uploaded",
             show: true,
           })
         );
-        history.replace('/home');
+        history.replace("/home");
       })
       .catch((err) => {
         dispatch(uiActions.toggleDrop());

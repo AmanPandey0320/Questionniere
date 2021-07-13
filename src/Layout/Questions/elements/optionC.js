@@ -8,37 +8,68 @@ import {
 import { MdCancel } from "react-icons/md";
 import { optionActions } from "../../../store/reducers/optionSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+
+/**
+ *
+ * @param {*
+ * option code
+ * } props
+ * @returns Multiple choice checkBox with textbox
+ */
 
 const Option = (props) => {
-  const classes = useStyles();
   const { code } = props;
-  const dispatch = useDispatch();
+
+  /**
+   * fetching the option with code from store
+   */
   const [option] = useSelector((state) =>
     state.option.data.filter((op) => op.code === code)
   );
+
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
   const [isTrue, setIsTrue] = useState(option.isTrue);
   const [text, setText] = useState(option.text);
+  const isMounted = useRef(false);
+
+  /**
+   * the updates the store
+   * when the text changes
+   */
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (isMounted.current) {
       dispatch(optionActions.editOption({ code, text }));
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
+    } else {
+      isMounted.current = true;
+    }
   }, [text, dispatch, code]);
 
+  /**
+   * this updates the store
+   * when the checkbox is toggled
+   */
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (isMounted.current) {
       dispatch(optionActions.editOption({ code, isTrue }));
-    }, 10);
-    return () => {
-      clearTimeout(timer);
-    };
+    } else {
+      isMounted.current = true;
+    }
   }, [isTrue, dispatch, code]);
 
-  // console.log(option);
+  /**
+   * handle the option deletion
+   * @param {*} e 
+   */
+
+  const handleDelete = (e) => {
+    dispatch(optionActions.deleteOption({ code }));
+  };
+
   return (
     <div className={classes.root}>
       <FormControlLabel
@@ -57,9 +88,7 @@ const Option = (props) => {
           />
         }
       />
-      <IconButton
-        onClick={(e) => dispatch(optionActions.deleteOption({ code }))}
-      >
+      <IconButton onClick={handleDelete}>
         <MdCancel />
       </IconButton>
     </div>

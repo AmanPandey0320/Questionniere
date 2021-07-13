@@ -29,7 +29,8 @@ const UIRes = (props) => {
         <CircularProgress color="primary" />
         <Snackbar
           open={snackbar}
-          autoHideDuration={3000}
+          autoHideDuration={5000}
+          anchorOrigin={{vertical:'top',horizontal:'right'}}
           onClose={() => {
             setSnackbar(false);
           }}
@@ -40,13 +41,14 @@ const UIRes = (props) => {
             }}
             severity="info"
           >
-            Please wait while we login!
+            Please wait!
           </Alert>
         </Snackbar>
       </Backdrop>
       <Snackbar
         open={ui.notification.show}
         autoHideDuration={5000}
+        anchorOrigin={{vertical:'top',horizontal:'right'}}
         onClose={(e) =>
           dispatch(
             uiActions.sendNotification({
