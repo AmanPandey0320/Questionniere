@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { initForm } from "../store/thunks/formThunk";
 import UIRes from "../components/uiResponces";
 import { useEffect } from "react";
-import { getAllForms,createForm } from "../store/thunks/dashboardThunk";
+import { getAllForms, createForm } from "../store/thunks/dashboardThunk";
+import { TiTickOutline,TiCancel } from "react-icons/ti";
 
 const Dashboard = (props) => {
   const classes = useStyles();
@@ -34,15 +35,32 @@ const Dashboard = (props) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div className={classes.allForms} >
+      <div className={classes.allForms}>
         {forms.map((form) => {
-          if(form.title){
+          const date = new Date(form.created_at);
+          if (form.title) {
             return (
-              <div key={form.id} onClick={e => dispatch(createForm(history,form.id))} className={classes.formElement}>
-                <div>{form.title}</div>
+              <div
+                key={form.id}
+                onClick={(e) => dispatch(createForm(history, form.id))}
+                className={classes.formElement}
+              >
+                <div className={classes.title}>{form.title}</div>
+                <div
+                  className={classes.created}
+                >{`on ${date.getDate()}-${date.getMonth()}-${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</div>
+                <div className={classes.title}>
+                  {Boolean(form.active) === true ? (
+                    <span style={{ color: "green" }}>
+                      <TiTickOutline />&nbsp;active
+                    </span>
+                  ) : (
+                    <span style={{ color: "tomato" }}><TiCancel/>&nbsp;disabled</span>
+                  )}
+                </div>
               </div>
             );
-          }else{
+          } else {
             return null;
           }
         })}

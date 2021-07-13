@@ -44,6 +44,10 @@ const formSlice = createSlice({
       if (action.payload.shuffle_section !== undefined) {
         state.shuffle_section = action.payload.shuffle_section;
       }
+
+      if (action.payload.active !== undefined) {
+        state.active = action.payload.active;
+      }
     },
     /**
      * adds new section to the form

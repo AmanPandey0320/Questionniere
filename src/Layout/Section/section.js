@@ -87,7 +87,7 @@ const Section = (props) => {
   // console.log(section);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider key={section.code} theme={theme}>
       <div className={classes.root}>
         <span
           className={classes.sectionHead}

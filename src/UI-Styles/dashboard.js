@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
   allForms:{
     display:'flex',
     flexDirection:'column',
-    margin:'auto',
-    width:'256px'
+    marginTop:theme.spacing(2),
+    marginLeft:theme.spacing(2),
+    width:'60%'
   },
   formElement:{
     marginTop:'4px',
@@ -31,11 +32,23 @@ const useStyles = makeStyles((theme) => ({
     borderRadius:'4px',
     boxShadow:'2px 2px 4px grey',
     transition:'0.1s',
+    borderLeftStyle:'solid',
+    borderWidth:'4px',
+    borderColor:theme.palette.primary.main,
+    display:'flex',
+    flexFlow:'row wrap',
     '&:hover':{
       cursor:'pointer',
       transform:'scaleX(1.01)',
       transition:'0.1s',
     }
+  },
+  title:{
+    width:'33%',
+
+  },
+  created:{
+    width:'33%',
   }
 }));
 

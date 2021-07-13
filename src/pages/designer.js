@@ -35,6 +35,7 @@ const Designer = (props) => {
   const [type, setType] = useState(form.type);
   const [show_marks, setShow] = useState(form.show_marks);
   const [shuffle_section, setShuffle] = useState(form.shuffle_section);
+  const [active, setActive] = useState(Boolean(form.active));
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,6 +52,7 @@ const Designer = (props) => {
   }, [title, desc, dispatch]);
 
   useEffect(() => {
+    console.log("ran");
     dispatch(
       formActions.editFormData({
         total_marks,
@@ -58,9 +60,18 @@ const Designer = (props) => {
         shuffle_section,
         show_marks,
         type,
+        active,
       })
     );
-  }, [total_marks, passing_marks, shuffle_section, show_marks, type, dispatch]);
+  }, [
+    total_marks,
+    active,
+    passing_marks,
+    shuffle_section,
+    show_marks,
+    type,
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (sec >= form.section.length) {
@@ -161,6 +172,16 @@ const Designer = (props) => {
                   <MenuItem value={1}>Feedback</MenuItem>
                 </Select>
               </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    onChange={(e) => setActive(e.target.checked)}
+                    checked={active}
+                    color="primary"
+                  />
+                }
+                label="Active"
+              />
             </ThemeProvider>
           </div>
         </div>
