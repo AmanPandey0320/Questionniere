@@ -145,6 +145,13 @@ const questionSlice = createSlice({
       state.count = 0;
       state.data = [];
     },
+    /**
+     * creates full question
+     */
+     createQuestion(state,action){
+      state.data.push(action.payload.question);
+      state.count = action.payload.question.id;
+    },
   },
 });
 

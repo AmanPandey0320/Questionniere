@@ -73,6 +73,14 @@ const blockSlice = createSlice({
       state.count = 0;
       state.data = [];
     },
+    /**
+     * creates full block
+     */
+    createBlock(state,action){
+      state.data.push(action.payload.block);
+      state.count = action.payload.block.id;
+    },
+
   },
 });
 

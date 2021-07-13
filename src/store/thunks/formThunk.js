@@ -110,7 +110,7 @@ export const submitFrom = (history) => {
             show: true,
           })
         );
-        history.replace("/home");
+        history.replace("/");
       })
       .catch((err) => {
         dispatch(uiActions.toggleDrop());

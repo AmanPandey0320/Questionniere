@@ -5,24 +5,24 @@ const formSlice = createSlice({
   initialState: {
     id: null,
     code: null,
-    desc: '',
+    desc: "",
     title: "Untitled questioniere",
     type: 0,
     active: 1,
     section_count: 0,
-    created_at:undefined,
-    last_edited:undefined,
-    total_marks:0,
-    passing_marks:0,
-    show_marks:false,
-    shuffle_section:false,
+    created_at: undefined,
+    last_edited: undefined,
+    total_marks: 0,
+    passing_marks: 0,
+    show_marks: false,
+    shuffle_section: false,
     section: [],
   },
   reducers: {
     /**
      * edits the properties of the form
-     * @param {*} state 
-     * @param {*} action 
+     * @param {*} state
+     * @param {*} action
      */
     editFormData(state, action) {
       state.id = action.payload.id || state.id;
@@ -35,20 +35,20 @@ const formSlice = createSlice({
       state.created_at = state.created_at || Date.now();
       state.total_marks = action.payload.total_marks || state.total_marks;
       state.passing_marks = action.payload.passing_marks || state.passing_marks;
-      if(action.payload.show_marks !== undefined){
+      if (action.payload.show_marks !== undefined) {
         state.show_marks = action.payload.show_marks;
       }
-      if(action.payload.type !== undefined ){
+      if (action.payload.type !== undefined) {
         state.type = action.payload.type;
       }
-      if(action.payload.shuffle_section !== undefined ){
+      if (action.payload.shuffle_section !== undefined) {
         state.shuffle_section = action.payload.shuffle_section;
       }
     },
     /**
      * adds new section to the form
-     * @param {*} state 
-     * @param {*} action 
+     * @param {*} state
+     * @param {*} action
      */
     addNewSection(state, action) {
       if (state.section.length === 0) {
@@ -65,7 +65,7 @@ const formSlice = createSlice({
         shuffle_children: 0,
         show_marks: 0,
         active: 1,
-        color:'#2196f3',
+        color: "#2196f3",
         block_count: 0,
         blocks: [],
       };
@@ -74,29 +74,29 @@ const formSlice = createSlice({
     },
     /**
      * edit section on the basis od section code
-     * @param {*} state 
-     * @param {*} action 
+     * @param {*} state
+     * @param {*} action
      */
     editSection(state, action) {
-      const { code, title,blocks,color,shuffle_children } = action.payload;
+      const { code, title, blocks, color, shuffle_children } = action.payload;
       const section = state.section.map((sec) => {
         if (sec.code === code) {
           sec.title = title || sec.title;
           sec.blocks = blocks || sec.blocks;
           sec.color = color || sec.color;
-          if(shuffle_children !== undefined){
+          if (shuffle_children !== undefined) {
             sec.shuffle_children = shuffle_children;
           }
         }
         return sec;
       });
-      
+
       state.section = section;
     },
     /**
      * delete the section on basis of section code
-     * @param {*} state 
-     * @param {*} action 
+     * @param {*} state
+     * @param {*} action
      */
     deleteSection(state, action) {
       const { code } = action.payload;
@@ -105,17 +105,26 @@ const formSlice = createSlice({
     },
     /**
      * clears the form
-     * @param {*} state 
-     * @param {*} action 
+     * @param {*} state
+     * @param {*} action
      */
-    clearForm(state,action){
+    clearForm(state, action) {
       state.id = null;
       state.code = null;
       state.section = [];
-      state.section_count=0;
-      state.title="Untitled";
-      state.desc= "None"
-    }
+      state.section_count = 0;
+      state.title = "Untitled";
+      state.desc = "None";
+    },
+    /**
+     * create section from database
+     * @param {*} state
+     * @param {*} action
+     */
+    createSection(state, action) {
+      state.section_count = action.payload.section_count;
+      state.section = action.payload.sections;
+    },
   },
 });
 

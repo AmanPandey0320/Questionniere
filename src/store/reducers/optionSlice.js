@@ -71,6 +71,13 @@ const optionSlice = createSlice({
       state.count = 0;
       state.data = [];
     },
+    /**
+     * creates full question
+     */
+     createOption(state,action){
+      state.data.push(action.payload.option);
+      state.count = action.payload.option.id;
+    },
   },
 });
 
