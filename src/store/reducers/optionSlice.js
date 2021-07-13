@@ -7,6 +7,11 @@ const optionSlice = createSlice({
     data: [],
   },
   reducers: {
+    /**
+     * adds new option to a question
+     * @param {*} state 
+     * @param {*} action 
+     */
     addOptions(state, action) {
       const { qnr_id, sec_id, blk_id, que_id } = action.payload;
       const id = state.count + 1;
@@ -17,10 +22,20 @@ const optionSlice = createSlice({
       state.count = id;
       state.data.push(option);
     },
+    /**
+     * deletes an option
+     * @param {*} state 
+     * @param {*} action 
+     */
     deleteOption(state, action) {
       const { code } = action.payload;
       state.data = state.data.filter((op) => op.code !== code);
     },
+    /**
+     * edits an option
+     * @param {*} state 
+     * @param {*} action 
+     */
     editOption(state, action) {
       const { code, text, isTrue } = action.payload;
       state.data = state.data.map((op) => {
@@ -33,6 +48,11 @@ const optionSlice = createSlice({
         return op;
       });
     },
+    /**
+     * handle single correct option for a question
+     * @param {*} state 
+     * @param {*} action 
+     */
     setSingleCorrect(state, action) {
       const { code, que_id } = action.payload;
       state.data = state.data.map((op) => {
@@ -42,6 +62,11 @@ const optionSlice = createSlice({
         return op;
       });
     },
+    /**
+     * clears the options
+     * @param {*} state 
+     * @param {*} option 
+     */
     clearOption(state, option) {
       state.count = 0;
       state.data = [];

@@ -19,6 +19,11 @@ const formSlice = createSlice({
     section: [],
   },
   reducers: {
+    /**
+     * edits the properties of the form
+     * @param {*} state 
+     * @param {*} action 
+     */
     editFormData(state, action) {
       state.id = action.payload.id || state.id;
       state.code = action.payload.code || state.code;
@@ -40,6 +45,11 @@ const formSlice = createSlice({
         state.shuffle_section = action.payload.shuffle_section;
       }
     },
+    /**
+     * adds new section to the form
+     * @param {*} state 
+     * @param {*} action 
+     */
     addNewSection(state, action) {
       if (state.section.length === 0) {
         state.section_count = 0;
@@ -62,6 +72,11 @@ const formSlice = createSlice({
       state.section_count = id;
       state.section.push(section);
     },
+    /**
+     * edit section on the basis od section code
+     * @param {*} state 
+     * @param {*} action 
+     */
     editSection(state, action) {
       const { code, title,blocks,color,shuffle_children } = action.payload;
       const section = state.section.map((sec) => {
@@ -78,11 +93,21 @@ const formSlice = createSlice({
       
       state.section = section;
     },
+    /**
+     * delete the section on basis of section code
+     * @param {*} state 
+     * @param {*} action 
+     */
     deleteSection(state, action) {
       const { code } = action.payload;
       const section = state.section.filter((sec) => sec.code !== code);
       state.section = section;
     },
+    /**
+     * clears the form
+     * @param {*} state 
+     * @param {*} action 
+     */
     clearForm(state,action){
       state.id = null;
       state.code = null;

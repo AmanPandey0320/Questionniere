@@ -9,6 +9,11 @@ const questionSlice = createSlice({
   },
   reducers: {
     setType,
+    /**
+     * adds new question
+     * @param {*} state 
+     * @param {*} action 
+     */
     addQuestion(state, action) {
       const { qnr_id, blk_id, sec_id } = action.payload;
       const id = state.count + 1;
@@ -42,10 +47,21 @@ const questionSlice = createSlice({
       state.count = id;
       state.data.push(question);
     },
+
+    /**
+     * deletes new question
+     * @param {*} state 
+     * @param {*} action 
+     */
     deleteQuestion(state, action) {
       const { code } = action.payload;
       state.data = state.data.filter((question) => question.code !== code);
     },
+    /**
+     * edits a question on the basis of code
+     * @param {*} state 
+     * @param {*} action 
+     */
     editQuestion(state, action) {
       const {
         que,
@@ -85,7 +101,7 @@ const questionSlice = createSlice({
             question.width = width;
           }
 
-          //margin 
+          // setting margin 
           
           if(marginL !== undefined){
             question.marginL = marginL;
@@ -100,7 +116,7 @@ const questionSlice = createSlice({
             question.marginB = marginB;
           }
           
-          //padding
+          // setting padding
 
           if(paddingL !== undefined){
             question.paddingL = paddingL;
@@ -115,6 +131,7 @@ const questionSlice = createSlice({
             question.paddingB = paddingB;
           }
 
+          // setting shuffle option
           if(shuffle !== undefined){
             question.shuffle = shuffle
           }
@@ -122,6 +139,8 @@ const questionSlice = createSlice({
         return question;
       });
     },
+
+    //clears the question for new form
     clearQuestion(state, action) {
       state.count = 0;
       state.data = [];
